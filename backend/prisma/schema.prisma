@@ -25,7 +25,7 @@ model User {
   admissionYear Int
 
   Preference Preference[]
-  SpareTime  SpareTime[]
+  SpareTime  String[]
   likedBy    Like[]       @relation("liked_by")
   likeTo     Like[]       @relation("like_to")
 }
@@ -35,13 +35,6 @@ model Preference {
   preference String
   user       User?  @relation(fields: [userId], references: [id])
   userId     Int?
-}
-
-model SpareTime {
-  id        Int    @id @default(autoincrement())
-  spareTime String
-  user      User?  @relation(fields: [userId], references: [id])
-  userId    Int?
 }
 
 model Like {

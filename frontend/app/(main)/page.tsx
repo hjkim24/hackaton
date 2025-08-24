@@ -1,90 +1,143 @@
-// frontend/app/(main)/page.tsx
-
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import SwipeCard from "@/components/SwipeCard";
+import SwipeContainer from "@/components/SwipeContainer";
+import MainPageHeader from "./_components/MainPageHeader";
 
-interface UserProfile {
-  id: number;
-  nickname: string;
-  age: number;
-  photo?: string;
+type UserProfile = {
+  id: number
+  age: number
+  sex: "male" | "female"
+  college: string
+  major: string
+  username: string
+  nickname: string
+  name: string
+  admissionYear: number
+  image: string
+  preferences: string[]
+  spareTime: { id: number, spareTime: string, user: string, day: string }[]
+  likeBy: string[]
+  likeTo: string[]
 }
 
-// 가짜 데이터
 const profilesData: UserProfile[] = [
-  { id: 1, nickname: "Alice", age: 22, photo: "/src/alice.png" },
-  { id: 2, nickname: "Bob", age: 25, photo: "/src/bob.png" },
-  { id: 3, nickname: "Charlie", age: 23, photo: "/src/charlie.png" },
-  { id: 4, nickname: "John", age: 27, photo: "/src/john.png" },
-  { id: 5, nickname: "Anni", age: 24, photo: "/src/anni.png" },
-];
+  { 
+    id: 1, 
+    age: 22, 
+    sex: "female", 
+    college: "공과대학", 
+    major: "컴퓨터공학과", 
+    username: "alice_dev", 
+    nickname: "앨리스", 
+    name: "김앨리스", 
+    admissionYear: 2021, 
+    image: "/src/alice.png",
+    preferences: ["커피", "코딩", "게임", "여행", "음악"],
+    spareTime: [
+      { id: 1, spareTime: "18:00", user: "김앨리스", day: "MONDAY" },
+      { id: 2, spareTime: "19:00", user: "김앨리스", day: "TUESDAY" },
+      { id: 3, spareTime: "20:00", user: "김앨리스", day: "WEDNESDAY" },
+      { id: 4, spareTime: "17:00", user: "김앨리스", day: "THURSDAY" },
+      { id: 5, spareTime: "21:00", user: "김앨리스", day: "FRIDAY" }
+    ],
+    likeBy: ["이밥", "박찰리"],
+    likeTo: ["최존"]
+  },
+  { 
+    id: 2, 
+    age: 23, 
+    sex: "male", 
+    college: "자연과학대학", 
+    major: "수학과", 
+    username: "bob_math", 
+    nickname: "밥", 
+    name: "이밥", 
+    admissionYear: 2020, 
+    image: "/src/bob.png",
+    preferences: ["수학", "독서", "카페", "영화", "운동"],
+    spareTime: [
+      { id: 6, spareTime: "16:00", user: "이밥", day: "MONDAY" },
+      { id: 7, spareTime: "18:00", user: "이밥", day: "TUESDAY" },
+      { id: 8, spareTime: "19:00", user: "이밥", day: "WEDNESDAY" },
+      { id: 9, spareTime: "14:00", user: "이밥", day: "SATURDAY" },
+      { id: 10, spareTime: "15:00", user: "이밥", day: "SUNDAY" }
+    ],
+    likeBy: ["김앨리스", "정애니"],
+    likeTo: ["박찰리", "최존"]
+  },
+  { 
+    id: 3, 
+    age: 21, 
+    sex: "male", 
+    college: "경영대학", 
+    major: "경영학과", 
+    username: "charlie_biz", 
+    nickname: "찰리", 
+    name: "박찰리", 
+    admissionYear: 2022, 
+    image: "/src/charlie.png",
+    preferences: ["경영", "투자", "골프", "와인", "네트워킹"],
+    spareTime: [
+      { id: 11, spareTime: "17:00", user: "박찰리", day: "TUESDAY" },
+      { id: 12, spareTime: "19:00", user: "박찰리", day: "THURSDAY" },
+      { id: 13, spareTime: "18:00", user: "박찰리", day: "FRIDAY" },
+      { id: 14, spareTime: "16:00", user: "박찰리", day: "SATURDAY" }
+    ],
+    likeBy: ["김앨리스", "이밥"],
+    likeTo: ["최존", "정애니"]
+  },
+  { 
+    id: 4, 
+    age: 24, 
+    sex: "male", 
+    college: "의과대학", 
+    major: "의학과", 
+    username: "john_med", 
+    nickname: "존", 
+    name: "최존", 
+    admissionYear: 2019, 
+    image: "/src/john.png",
+    preferences: ["의학", "연구", "독서", "클래식", "등산"],
+    spareTime: [
+      { id: 15, spareTime: "20:00", user: "최존", day: "MONDAY" },
+      { id: 16, spareTime: "21:00", user: "최존", day: "WEDNESDAY" },
+      { id: 17, spareTime: "22:00", user: "최존", day: "FRIDAY" },
+      { id: 18, spareTime: "16:00", user: "최존", day: "SUNDAY" }
+    ],
+    likeBy: ["김앨리스", "이밥", "박찰리"],
+    likeTo: ["정애니"]
+  },
+  { 
+    id: 5, 
+    age: 20, 
+    sex: "female", 
+    college: "예술대학", 
+    major: "디자인학과", 
+    username: "anni_art", 
+    nickname: "애니", 
+    name: "정애니", 
+    admissionYear: 2023, 
+    image: "/src/anni.png",
+    preferences: ["디자인", "그림", "전시회", "카페", "패션"],
+    spareTime: [
+      { id: 19, spareTime: "16:00", user: "정애니", day: "TUESDAY" },
+      { id: 20, spareTime: "18:00", user: "정애니", day: "THURSDAY" },
+      { id: 21, spareTime: "15:00", user: "정애니", day: "SATURDAY" },
+      { id: 22, spareTime: "14:00", user: "정애니", day: "SUNDAY" }
+    ],
+    likeBy: ["이밥", "박찰리", "최존"],
+    likeTo: ["김앨리스"]
+  }
+]
+
 
 export default function SwipePage() {
-  const [profiles, setProfiles] = useState(profilesData);
-  const [liked, setLiked] = useState<UserProfile[]>([]);
-
-  const handleSwipe = (profile: UserProfile, direction: "left" | "right") => {
-    if (direction === "right") {
-      setLiked((prev) => [...prev, profile]);
-    }
-    setProfiles((prev) => prev.filter((p) => p.id !== profile.id));
-  };
-
-  const resetProfiles = () => {
-    setProfiles(profilesData);
-    setLiked([]);
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">런챗 매칭</h1>
-
-      <div className="relative w-80 h-96 mb-8">
-        <AnimatePresence>
-          {profiles.length > 0 ? (
-            profiles.slice(0, 1).map((profile) => (
-              <SwipeCard
-                key={profile.id}
-                user={profile}
-                onSwipe={(direction) => handleSwipe(profile, direction)}
-              />
-            ))
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center">
-              <div className="text-6xl mb-4">🎉</div>
-              <p className="text-xl font-semibold text-gray-700 mb-2">
-                모든 프로필을 확인했습니다!
-              </p>
-              <button
-                onClick={resetProfiles}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full font-medium transition-colors"
-              >
-                다시 시작하기
-              </button>
-            </div>
-          )}
-        </AnimatePresence>
+    <div>
+      <MainPageHeader />
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4">
+        <SwipeContainer initialProfiles={profilesData} />
       </div>
-
-      {profiles.length > 0 && (
-        <div className="flex gap-4">
-          <button
-            onClick={() => handleSwipe(profiles[0], "left")}
-            className="bg-red-500 hover:bg-red-600 text-white p-4 rounded-full shadow-lg transition-colors"
-          >
-            ❌
-          </button>
-          <button
-            onClick={() => handleSwipe(profiles[0], "right")}
-            className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-colors"
-          >
-            ❤️
-          </button>
-        </div>
-      )}
     </div>
   );
 }

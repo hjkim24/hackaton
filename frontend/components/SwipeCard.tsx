@@ -6,11 +6,21 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
-interface UserProfile {
-  id: number;
-  photo?: string;
-  nickname: string;
-  age: number;
+type UserProfile = {
+  id: number
+  age: number
+  sex: "male" | "female"
+  college: string
+  major: string
+  username: string
+  nickname: string
+  name: string
+  admissionYear: number
+  image: string
+  preferences: string[]
+  spareTime: { id: number, spareTime: string, user: string, day: string }[]
+  likeBy: string[]
+  likeTo: string[]
 }
 
 interface SwipeCardProps {
@@ -51,7 +61,7 @@ export default function SwipeCard({ user, onSwipe }: SwipeCardProps) {
     >
       <div className="relative w-full h-full rounded-2xl shadow-2xl overflow-hidden">
         <Image
-          src={user.photo || "/src/placeholder.png"}
+          src={user.image || "/src/placeholder.png"}
           alt={user.nickname}
           fill
           className="object-cover"

@@ -1,6 +1,7 @@
 'use client'
 
 import { LoginForm } from '@/components/LoginForm'
+import PreferenceSelector from '@/components/PreferenceSelector'
 import TimeSelectionCalendar from '@/components/TimeSelectionCalendar'
 import { Button } from '@/components/ui/button'
 import {
@@ -12,7 +13,6 @@ import {
 } from '@/components/ui/card'
 import { SpareTime } from '@/lib/constants'
 import { useAuthStore } from '@/stores/authStore'
-import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 
 export default function MyPage() {
@@ -20,9 +20,13 @@ export default function MyPage() {
   const [spareTimes, setSpareTimes] = useState<SpareTime[]>([])
   const [selectedTimes, setSelectedTimes] = useState<SpareTime[]>([])
   const [isEditing, setIsEditing] = useState(false)
+  const [preferences, setPreferences] = useState<string[]>([])
+  const [selectedPreferences, setSelectedPreferences] = useState<string[]>([])
+  const [isEditingPreferences, setIsEditingPreferences] = useState(false)
 
   useEffect(() => {
     loadSpareTimes()
+    loadPreferences()
   }, []) // 빈 의존성 배열로 마운트 시에만 실행
 
   const loadSpareTimes = async () => {
@@ -45,6 +49,21 @@ export default function MyPage() {
       setSelectedTimes(mockData)
     } catch (error) {
       console.error('Failed to load spare times:', error)
+    }
+  }
+
+  const loadPreferences = async () => {
+    try {
+      // TODO: API 호출로 기존 preference 데이터 가져오기
+      // const response = await fetch('/api/preferences')
+      // const data = await response.json()
+
+      // 임시 데이터 (나중에 API로 교체)
+      const mockPreferences = ['취업', '운동', '음악']
+      setPreferences(mockPreferences)
+      setSelectedPreferences(mockPreferences)
+    } catch (error) {
+      console.error('Failed to load preferences:', error)
     }
   }
 
@@ -108,6 +127,55 @@ export default function MyPage() {
     }
   }
 
+  // Preference 관련 핸들러들
+  const handlePreferenceToggle = (preference: string) => {
+    setSelectedPreferences((prev) => {
+      if (prev.includes(preference)) {
+        return prev.filter((p) => p !== preference)
+      } else {
+        return [...prev, preference]
+      }
+    })
+  }
+
+  const handlePreferenceRemove = (preference: string) => {
+    setSelectedPreferences((prev) => prev.filter((p) => p !== preference))
+  }
+
+  const handlePreferenceEditToggle = () => {
+    if (isEditingPreferences) {
+      setIsEditingPreferences(false)
+      setSelectedPreferences(preferences)
+    } else {
+      setIsEditingPreferences(true)
+    }
+  }
+
+  const handlePreferenceSubmit = async () => {
+    console.log('Submitting preferences:', selectedPreferences)
+    try {
+      // TODO: API 호출로 preference 데이터 저장/수정
+      const response = await fetch('/api/preferences', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ preferences: selectedPreferences })
+      })
+
+      if (response.ok) {
+        setPreferences(selectedPreferences)
+        setIsEditingPreferences(false)
+        alert('관심사가 성공적으로 저장되었습니다!')
+      } else {
+        throw new Error('Failed to save preferences')
+      }
+    } catch (error) {
+      console.error('Failed to save preferences:', error)
+      alert('관심사 저장에 실패했습니다.')
+    }
+  }
+
   const handleLogout = () => {
     logout()
   }
@@ -159,6 +227,16 @@ export default function MyPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* 관심사 설정 컴포넌트 */}
+        <PreferenceSelector
+          selectedPreferences={selectedPreferences}
+          isEditing={isEditingPreferences}
+          onEditToggle={handlePreferenceEditToggle}
+          onSubmit={handlePreferenceSubmit}
+          onPreferenceToggle={handlePreferenceToggle}
+          onPreferenceRemove={handlePreferenceRemove}
+        />
 
         {/* 시간 선택 캘린더 컴포넌트 */}
         <TimeSelectionCalendar

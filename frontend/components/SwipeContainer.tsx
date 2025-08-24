@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import SwipeCard from "@/components/SwipeCard";
 import LikedProfiles from "@/components/LikedProfiles";
+import { useUserStore } from "@/stores/userStore";
 
 type Preference = {
   id: number
@@ -36,18 +37,19 @@ interface SwipeContainerProps {
 
 export default function SwipeContainer({ initialProfiles }: SwipeContainerProps) {
   const [profiles, setProfiles] = useState(initialProfiles);
-  const [liked, setLiked] = useState<UserProfile[]>([]);
+  const { likedUsers, addLikedUser, clearLikedUsers } = useUserStore();
 
   const handleSwipe = (profile: UserProfile, direction: "left" | "right") => {
     if (direction === "right") {
-      setLiked((prev) => [...prev, profile]);
+      // 오른쪽으로 스와이프한 경우에만 전역 스토어에 추가
+      addLikedUser(profile);
     }
     setProfiles((prev) => prev.filter((p) => p.id !== profile.id));
   };
 
   const resetProfiles = () => {
     setProfiles(initialProfiles);
-    setLiked([]);
+    clearLikedUsers(); // 전역 스토어도 초기화
   };
 
   return (
@@ -80,7 +82,7 @@ export default function SwipeContainer({ initialProfiles }: SwipeContainerProps)
       </div>
 
       {/* 좋아한 프로필 목록 컴포넌트 호출 */}
-      <LikedProfiles likedUsers={liked} />
+      <LikedProfiles likedUsers={likedUsers} />
     </>
   );
 }

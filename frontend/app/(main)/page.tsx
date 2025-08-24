@@ -63,8 +63,8 @@ export default function SwipePage() {
         const userProfiles = data.map(item => item.likedToUser)
         setProfiles(userProfiles)
         
-        // 전역 스토어에 좋아요한 사용자들 저장
-        setLikedUsers(userProfiles)
+        // API에서 받아온 데이터는 전역 스토어에 저장하지 않음
+        // 오른쪽으로 스와이프한 사용자만 전역 스토어에 저장됨
       } catch (err) {
         console.error('Fetch error details:', err)
         if (err instanceof TypeError && err.message === 'Failed to fetch') {
@@ -78,7 +78,7 @@ export default function SwipePage() {
     }
 
     fetchLikeList()
-  }, [setLikedUsers])
+  }, [])
 
   if (loading) {
     return (

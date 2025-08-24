@@ -30,6 +30,7 @@ interface UserStore {
   setLikedUsers: (users: LikedUser[]) => void
   addLikedUser: (user: LikedUser) => void
   removeLikedUser: (userId: number) => void
+  clearLikedUsers: () => void
 }
 
 export const useUserStore = create<UserStore>((set) => ({
@@ -41,4 +42,5 @@ export const useUserStore = create<UserStore>((set) => ({
   removeLikedUser: (userId) => set((state) => ({ 
     likedUsers: state.likedUsers.filter(user => user.id !== userId) 
   })),
+  clearLikedUsers: () => set({ likedUsers: [] }),
 })) 

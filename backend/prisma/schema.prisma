@@ -14,22 +14,22 @@ enum Gender {
 }
 
 model User {
-  id            Int    @id @default(autoincrement())
-  username      String @unique
+  id            Int          @id @default(autoincrement())
+  username      String       @unique
   password      String
-  nickname      String @unique
+  nickname      String       @unique
   name          String
   gender        Gender
   college       String
   major         String
   admissionYear Int
-
-  Preference   Preference[]
-  likedBy      Like[]       @relation("liked_by")
-  likeTo       Like[]       @relation("like_to")
-  SpareTime    SpareTime[]
-  sentMessages Message[]    @relation("sender")
-  chatRooms    ChatRoom[]   @relation("participants")
+  age           Int
+  Preference    Preference[]
+  likedBy       Like[]       @relation("liked_by")
+  likeTo        Like[]       @relation("like_to")
+  SpareTime     SpareTime[]
+  sentMessages  Message[]    @relation("sender")
+  chatRooms     ChatRoom[]   @relation("participants")
 }
 
 enum days {

@@ -127,6 +127,7 @@ export class UserService {
             gender: true,
             college: true,
             major: true,
+            age: true,
             admissionYear: true,
             Preference: true,
             SpareTime: true

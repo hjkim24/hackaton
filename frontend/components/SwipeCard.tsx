@@ -6,21 +6,29 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
+type Preference = {
+  id: number
+  preference: string
+  userId: number
+}
+
+type SpareTime = {
+  id: number
+  spareTime: string
+  day: string
+  userId: number
+}
+
 type UserProfile = {
   id: number
-  age: number
-  sex: "male" | "female"
+  nickname: string
+  gender: 'male' | 'female'
   college: string
   major: string
-  username: string
-  nickname: string
-  name: string
+  age: number
   admissionYear: number
-  image: string
-  preferences: string[]
-  spareTime: { id: number, spareTime: string, user: string, day: string }[]
-  likeBy: string[]
-  likeTo: string[]
+  Preference: Preference[]
+  SpareTime: SpareTime[]
 }
 
 interface SwipeCardProps {
@@ -59,23 +67,23 @@ export default function SwipeCard({ user, onSwipe }: SwipeCardProps) {
         zIndex: 1000
       }}
     >
-      <div className="relative w-full h-full rounded-2xl shadow-2xl overflow-hidden">
-        <Image
-          src={user.image || "/src/placeholder.png"}
-          alt={user.nickname}
-          fill
-          className="object-cover"
-          draggable={false}
-        />
+      <div className="relative w-full h-full rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-blue-400 to-purple-600">
+        {/* 이미지가 없는 경우 기본 배경색 사용 */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-white text-6xl font-bold">
+            {user.nickname.charAt(0)}
+          </div>
+        </div>
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
           <h3 className="text-white font-bold text-xl">{user.nickname}</h3>
+          <p className="text-white/90 text-sm mb-2">{user.college} {user.major}</p>
           <div className="flex flex-wrap gap-2 mt-2">
-            {user.preferences.map((pref, index) => (
+            {user.Preference.map((pref) => (
               <span 
-                key={index} 
+                key={pref.id} 
                 className="bg-white/20 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm"
               >
-                {pref}
+                {pref.preference}
               </span>
             ))}
           </div>

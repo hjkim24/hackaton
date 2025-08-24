@@ -2,11 +2,27 @@
 
 import Image from "next/image";
 
+type Preference = {
+  id: number
+  preference: string
+  userId: number
+}
+
+type SpareTime = {
+  id: number
+  spareTime: string
+  day: string
+  userId: number
+}
+
 interface UserProfile {
   id: number;
   nickname: string;
   age: number;
-  image: string;
+  college: string;
+  major: string;
+  Preference: Preference[];
+  SpareTime: SpareTime[];
 }
 
 interface LikedProfilesProps {
@@ -26,15 +42,13 @@ export default function LikedProfiles({ likedUsers }: LikedProfilesProps) {
       <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
         {likedUsers.map((profile) => (
           <div key={profile.id} className="text-center">
-            <div className="relative w-16 h-16 mx-auto mb-2">
-              <Image
-                src={profile.image || "/src/placeholder.png"}
-                alt={profile.nickname}
-                fill
-                className="rounded-full object-cover border-2 border-green-400"
-              />
+            <div className="relative w-16 h-16 mx-auto mb-2 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full border-2 border-green-400 flex items-center justify-center">
+              <div className="text-white text-xl font-bold">
+                {profile.nickname.charAt(0)}
+              </div>
             </div>
             <p className="text-sm font-medium text-gray-700">{profile.nickname}</p>
+            <p className="text-xs text-gray-500">{profile.college}</p>
           </div>
         ))}
       </div>

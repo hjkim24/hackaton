@@ -123,7 +123,14 @@ export default function MainPageHeader() {
       newDays.splice(hoverIndex, 0, removed);
       return newDays;
     });
-  }, [isScrolling]);
+    
+    // 선택된 아이템의 인덱스도 함께 업데이트
+    if (dragIndex === days.findIndex(item => item.id === selectedDay.id)) {
+      setSelectedDay(days[hoverIndex]);
+    } else if (hoverIndex === days.findIndex(item => item.id === selectedDay.id)) {
+      setSelectedDay(days[dragIndex]);
+    }
+  }, [isScrolling, days, selectedDay]);
 
   const moveStartTime = useCallback((dragIndex: number, hoverIndex: number) => {
     if (isScrolling) return; // 스크롤 중에는 이동 금지
@@ -133,7 +140,14 @@ export default function MainPageHeader() {
       newTimes.splice(hoverIndex, 0, removed);
       return newTimes;
     });
-  }, [isScrolling]);
+    
+    // 선택된 아이템의 인덱스도 함께 업데이트
+    if (dragIndex === startTimes.findIndex(item => item.id === selectedStartTime.id)) {
+      setSelectedStartTime(startTimes[hoverIndex]);
+    } else if (hoverIndex === startTimes.findIndex(item => item.id === selectedStartTime.id)) {
+      setSelectedStartTime(startTimes[dragIndex]);
+    }
+  }, [isScrolling, startTimes, selectedStartTime]);
 
   const moveEndTime = useCallback((dragIndex: number, hoverIndex: number) => {
     if (isScrolling) return; // 스크롤 중에는 이동 금지
@@ -143,7 +157,14 @@ export default function MainPageHeader() {
       newTimes.splice(hoverIndex, 0, removed);
       return newTimes;
     });
-  }, [isScrolling]);
+    
+    // 선택된 아이템의 인덱스도 함께 업데이트
+    if (dragIndex === endTimes.findIndex(item => item.id === selectedEndTime.id)) {
+      setSelectedEndTime(endTimes[hoverIndex]);
+    } else if (hoverIndex === endTimes.findIndex(item => item.id === selectedEndTime.id)) {
+      setSelectedEndTime(endTimes[dragIndex]);
+    }
+  }, [isScrolling, endTimes, selectedEndTime]);
 
   // 모달이 열릴 때만 스크롤 위치를 현재 선택된 항목으로 이동
   useEffect(() => {

@@ -1,0 +1,15 @@
+meta {
+  name: Get Recommendations
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/recommend
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

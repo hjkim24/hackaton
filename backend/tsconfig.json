@@ -15,7 +15,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@libs/*": ["libs/*"]
+      "@libs/prisma": ["./libs/prisma/src/index.ts"]
     },
     "incremental": true,
     "skipLibCheck": true,

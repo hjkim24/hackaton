@@ -1,4 +1,4 @@
-import { PrismaService } from '@libs/index'
+import { PrismaService } from '@libs/prisma/index'
 import { Module } from '@nestjs/common'
 import { ChatGateway } from './chat.gateway'
 import { ChatService } from './chat.service'

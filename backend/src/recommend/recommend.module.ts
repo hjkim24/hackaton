@@ -1,4 +1,4 @@
-import { PrismaService } from '@libs/index'
+import { PrismaService } from '@libs/prisma/index'
 import { Module } from '@nestjs/common'
 import { PrismaClient } from '@prisma/client/extension'
 import { RecommendController } from './recommend.controller'

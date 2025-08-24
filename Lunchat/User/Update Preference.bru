@@ -1,0 +1,32 @@
+meta {
+  name: Update Preference
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/user/1/preference
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "preferences" : [
+      {
+        "preference" : "basketball"
+      },
+      {
+        "preference" : "baseball"
+      },
+      {
+        "preference" : "soccer"
+      }
+      
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

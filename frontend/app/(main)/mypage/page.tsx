@@ -198,12 +198,6 @@ export default function MyPage() {
     <div className="min-h-screen px-4 py-6">
       <div className="mx-auto max-w-2xl">
         <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">마이페이지</CardTitle>
-            <CardDescription>
-              환영합니다, {user?.nickname || user?.username}님!
-            </CardDescription>
-          </CardHeader>
           <CardContent>
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
@@ -228,8 +222,8 @@ export default function MyPage() {
               </div>
 
               {/* 상세 정보 그리드 */}
-              <div className="grid grid-cols-1 gap-28 sm:grid-cols-2">
-                <div className="space-y-3">
+              <div className="mb-4 grid grid-cols-1 sm:grid-cols-2">
+                <div className="mb-3 space-y-3">
                   <div className="flex justify-between">
                     <span className="text-sm font-medium text-gray-600">
                       나이

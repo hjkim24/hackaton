@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Put, Query, Get, Param } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common'
 import { IDValidationPipe } from 'libs/pipe/src/id-validation.pipe'
 import { LikeDto } from './dto/like.dto'
 import { PreferencesDto } from './dto/preference.dto'
@@ -9,39 +9,39 @@ import { UserService } from './user.service'
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post(':userId/spare-time')
   async createSpareTime(
-    @Query('userId', IDValidationPipe) userId: number,
+    @Param('userId', IDValidationPipe) userId: number,
     @Body() spareTimeDto: SpareTimesDto
   ) {
     return await this.userService.createSpareTime(userId, spareTimeDto)
   }
 
-  @Put()
+  @Put(':userId/spare-time')
   async updateSpareTime(
-    @Query('userId', IDValidationPipe) userId: number,
+    @Param('userId', IDValidationPipe) userId: number,
     @Body() spareTimeDto: SpareTimesDto
   ) {
     return await this.userService.updateSpareTime(userId, spareTimeDto)
   }
 
-  @Post()
+  @Post(':userId/preference')
   async createPreference(
-    @Query('userId', IDValidationPipe) userId: number,
+    @Param('userId', IDValidationPipe) userId: number,
     @Body() preferenceDto: PreferencesDto
   ) {
     return await this.userService.createPreference(userId, preferenceDto)
   }
 
-  @Put()
+  @Put(':userId/preference')
   async updatePreference(
-    @Query('userId', IDValidationPipe) userId: number,
+    @Param('userId', IDValidationPipe) userId: number,
     @Body() preferenceDto: PreferencesDto
   ) {
     return await this.userService.updatePreference(userId, preferenceDto)
   }
 
-  @Post()
+  @Post('/like')
   async pushLike(@Body() likeDto: LikeDto) {
     return await this.userService.pushLike(likeDto)
   }

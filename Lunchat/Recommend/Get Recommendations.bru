@@ -5,9 +5,15 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/recommend
+  url: {{baseUrl}}/recommend/1?day=THU&startTime=08:00&endTime=16:00
   body: none
   auth: inherit
+}
+
+params:query {
+  day: THU
+  startTime: 08:00
+  endTime: 16:00
 }
 
 settings {

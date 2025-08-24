@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Param,
   ParseIntPipe,
   Query,
   ValidationPipe
@@ -11,11 +12,11 @@ import { RecommendService } from './recommend.service'
 @Controller('recommend')
 export class RecommendController {
   constructor(private readonly recommendService: RecommendService) {}
-  @Get()
+  @Get('/:userId')
   async getRecommendations(
-    @Query('userId', ParseIntPipe) userId: number,
+    @Param('userId', ParseIntPipe) userId: number,
     @Query(new ValidationPipe({ transform: true })) filter: FilterSpareTimeDto
   ) {
-    await this.recommendService.getRecommnedations(userId, filter)
+    return await this.recommendService.getRecommnedations(userId, filter)
   }
 }

@@ -1,0 +1,15 @@
+meta {
+  name: Get Sexy People
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/user/2/like-list
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

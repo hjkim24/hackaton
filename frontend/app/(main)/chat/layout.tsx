@@ -15,13 +15,14 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
   return (
     <div className="w-full flex flex-col h-full">
       {/* 탭 UI */}
-      <Tabs defaultValue={currentTab} className="w-full">
+      <Tabs defaultValue="recommendedpeople" className="w-full">
         {/* 탭 리스트 스타일 수정 */}
         <TabsList className="grid w-full grid-cols-2 rounded-none p-0 bg-background text-foreground">
           <Link href="/chat/recommendedpeople" passHref>
             <TabsTrigger
               value="recommendedpeople"
               className={cn(
+                "w-full",
                 "rounded-none rounded-t-lg transition-colors duration-200",
                 "text-base",
                 "data-[state=active]:bg-primary",
@@ -37,6 +38,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             <TabsTrigger
               value="chatting"
               className={cn(
+                "w-full",
                 "rounded-none rounded-t-lg transition-colors duration-200",
                 "text-base",
                 "data-[state=active]:bg-primary",

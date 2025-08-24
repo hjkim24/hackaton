@@ -8,8 +8,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Gender {
+  male
+  female
+}
+
 model User {
   id Int @id @default(autoincrement())
   username String @unique
   password String
+  gender Gender
+  college String
+  major String
+  admissionYear Int
+
+}
+
+model Preference {
+  id Int @id @default(autoincrement())
+  createdBy User @relation("CreatedByUser", fields: [createdById], references: [id], onDelete: SetNull)
+  createdById Int @map("created_by_id")
+  preference String
 }

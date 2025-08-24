@@ -78,14 +78,28 @@ export default function SwipeCard({ user, onSwipe }: SwipeCardProps) {
           <h3 className="text-white font-bold text-xl">{user.nickname}</h3>
           <p className="text-white/90 text-sm mb-2">{user.college} {user.major}</p>
           <div className="flex flex-wrap gap-2 mt-2">
-            {user.Preference.map((pref) => (
-              <span 
-                key={pref.id} 
-                className="bg-white/20 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm"
-              >
-                {pref.preference}
+            {user.Preference && user.Preference.length > 0 ? (
+              (() => {
+                console.log('User preferences:', user.Preference);
+                return user.Preference.slice(0, 3).map((pref, index) => (
+                  <span 
+                    key={pref.id || `pref-${index}`} 
+                    className="bg-white/20 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm"
+                  >
+                    {pref.preference}
+                  </span>
+                ));
+              })()
+            ) : (
+              <span className="text-white/60 text-xs px-2 py-1">
+                선호사항 없음
               </span>
-            ))}
+            )}
+            {user.Preference && user.Preference.length > 3 && (
+              <span className="text-gray-500 text-xs px-2 py-1">
+                +{user.Preference.length - 3}
+              </span>
+            )}
           </div>
         </div>
       </div>

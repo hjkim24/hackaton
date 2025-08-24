@@ -25,16 +25,29 @@ type LikedUser = {
   SpareTime: SpareTime[]
 }
 
+type SelectedTime = {
+  day: string
+  startTime: string
+  endTime: string
+}
+
 interface UserStore {
   likedUsers: LikedUser[]
+  selectedTime: SelectedTime
   setLikedUsers: (users: LikedUser[]) => void
   addLikedUser: (user: LikedUser) => void
   removeLikedUser: (userId: number) => void
   clearLikedUsers: () => void
+  setSelectedTime: (time: SelectedTime) => void
 }
 
 export const useUserStore = create<UserStore>((set) => ({
   likedUsers: [],
+  selectedTime: {
+    day: 'TUE',
+    startTime: '09:00',
+    endTime: '23:00'
+  },
   setLikedUsers: (users) => set({ likedUsers: users }),
   addLikedUser: (user) => set((state) => ({ 
     likedUsers: [...state.likedUsers, user] 
@@ -43,4 +56,5 @@ export const useUserStore = create<UserStore>((set) => ({
     likedUsers: state.likedUsers.filter(user => user.id !== userId) 
   })),
   clearLikedUsers: () => set({ likedUsers: [] }),
+  setSelectedTime: (time) => set({ selectedTime: time }),
 })) 

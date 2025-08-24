@@ -14,7 +14,6 @@ interface LikedProfilesProps {
 }
 
 export default function LikedProfiles({ likedUsers }: LikedProfilesProps) {
-  // 좋아한 유저가 없으면 아무것도 표시하지 않습니다.
   if (likedUsers.length === 0) {
     return null;
   }

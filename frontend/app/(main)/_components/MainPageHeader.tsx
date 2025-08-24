@@ -25,6 +25,7 @@ interface ScrollableItemProps {
   onClick: (item: Item) => void;
   index: number;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
+  isScrolling: boolean;
 }
 
 // 드래그 가능한 아이템을 렌더링하는 함수
@@ -33,11 +34,13 @@ const ScrollableItem: React.FC<ScrollableItemProps> = ({
   isCurrent, 
   onClick, 
   index, 
-  moveItem 
+  moveItem,
+  isScrolling
 }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'ITEM',
     item: { index },
+    canDrag: !isScrolling, // 스크롤 중에는 드래그 불가
     collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -104,52 +107,62 @@ export default function MainPageHeader() {
   const [selectedDay, setSelectedDay] = useState<Item>(days[1]); // 화요일
   const [selectedStartTime, setSelectedStartTime] = useState<Item>(startTimes[8]); // 12:00
   const [selectedEndTime, setSelectedEndTime] = useState<Item>(endTimes[10]); // 13:00
+  const [isScrolling, setIsScrolling] = useState(false);
 
   const dayRefs = useRef<(HTMLDivElement | null)[]>([]);
   const startTimeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const endTimeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollTimeoutRef = useRef<number | undefined>(undefined);
 
   // 아이템 이동 함수들
   const moveDay = useCallback((dragIndex: number, hoverIndex: number) => {
+    if (isScrolling) return; // 스크롤 중에는 이동 금지
     setDays((prevDays) => {
       const newDays = [...prevDays];
       const [removed] = newDays.splice(dragIndex, 1);
       newDays.splice(hoverIndex, 0, removed);
       return newDays;
     });
-  }, []);
+  }, [isScrolling]);
 
   const moveStartTime = useCallback((dragIndex: number, hoverIndex: number) => {
+    if (isScrolling) return; // 스크롤 중에는 이동 금지
     setStartTimes((prevTimes) => {
       const newTimes = [...prevTimes];
       const [removed] = newTimes.splice(dragIndex, 1);
       newTimes.splice(hoverIndex, 0, removed);
       return newTimes;
     });
-  }, []);
+  }, [isScrolling]);
 
   const moveEndTime = useCallback((dragIndex: number, hoverIndex: number) => {
+    if (isScrolling) return; // 스크롤 중에는 이동 금지
     setEndTimes((prevTimes) => {
       const newTimes = [...prevTimes];
       const [removed] = newTimes.splice(dragIndex, 1);
       newTimes.splice(hoverIndex, 0, removed);
       return newTimes;
     });
-  }, []);
+  }, [isScrolling]);
 
-  // 모달이 열릴 때 스크롤 위치를 현재 선택된 항목으로 이동
+  // 모달이 열릴 때만 스크롤 위치를 현재 선택된 항목으로 이동
   useEffect(() => {
     if (isModalOpen) {
-      const dayIndex = days.findIndex(item => item.id === selectedDay.id);
-      dayRefs.current[dayIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // 모달이 열린 직후에만 스크롤 위치 조정
+      const timer = setTimeout(() => {
+        const dayIndex = days.findIndex(item => item.id === selectedDay.id);
+        dayRefs.current[dayIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      const startTimeIndex = startTimes.findIndex(item => item.id === selectedStartTime.id);
-      startTimeRefs.current[startTimeIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const startTimeIndex = startTimes.findIndex(item => item.id === selectedStartTime.id);
+        startTimeRefs.current[startTimeIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      const endTimeIndex = endTimes.findIndex(item => item.id === selectedEndTime.id);
-      endTimeRefs.current[endTimeIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const endTimeIndex = endTimes.findIndex(item => item.id === selectedEndTime.id);
+        endTimeRefs.current[endTimeIndex]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100); // 모달 애니메이션이 완료된 후 실행
+
+      return () => clearTimeout(timer);
     }
-  }, [isModalOpen, selectedDay, selectedStartTime, selectedEndTime, days, startTimes, endTimes]);
+  }, [isModalOpen]); // isModalOpen만 의존성으로 설정
 
   // 스크롤 이벤트 핸들러 (선택된 항목 시각적으로 업데이트)
   const handleScroll = (
@@ -157,6 +170,18 @@ export default function MainPageHeader() {
     items: Item[], 
     setSelectedItem: React.Dispatch<React.SetStateAction<Item>>
   ) => {
+    setIsScrolling(true);
+    
+    // 기존 타이머 클리어
+    if (scrollTimeoutRef.current) {
+      window.clearTimeout(scrollTimeoutRef.current);
+    }
+    
+    // 스크롤 완료 후 150ms 뒤에 드래그 활성화
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      setIsScrolling(false);
+    }, 150);
+
     const container = event.target as HTMLDivElement;
     const itemHeight = container.querySelector(".py-2")?.clientHeight || 0;
     if (itemHeight === 0) return;
@@ -217,6 +242,7 @@ export default function MainPageHeader() {
                         onClick={setSelectedDay}
                         index={index}
                         moveItem={moveDay}
+                        isScrolling={isScrolling}
                       />
                     </div>
                   ))}
@@ -235,6 +261,7 @@ export default function MainPageHeader() {
                         onClick={setSelectedStartTime}
                         index={index}
                         moveItem={moveStartTime}
+                        isScrolling={isScrolling}
                       />
                     </div>
                   ))}
@@ -253,6 +280,7 @@ export default function MainPageHeader() {
                         onClick={setSelectedEndTime}
                         index={index}
                         moveItem={moveEndTime}
+                        isScrolling={isScrolling}
                       />
                     </div>
                   ))}

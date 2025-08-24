@@ -4,13 +4,7 @@ import { LoginForm } from '@/components/LoginForm'
 import PreferenceSelector from '@/components/PreferenceSelector'
 import TimeSelectionCalendar from '@/components/TimeSelectionCalendar'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { SpareTime } from '@/lib/constants'
 import { useAuthStore } from '@/stores/authStore'
 import React, { useState, useEffect } from 'react'
@@ -180,9 +174,7 @@ export default function MyPage() {
     logout()
   }
 
-  const handleLoginSuccess = () => {
-    // 로그인 성공 시 자동으로 상태가 업데이트됨
-  }
+  const handleLoginSuccess = () => {}
 
   if (!isAuthenticated) {
     return (
@@ -290,7 +282,6 @@ export default function MyPage() {
           </CardContent>
         </Card>
 
-        {/* 관심사 설정 컴포넌트 */}
         <PreferenceSelector
           selectedPreferences={selectedPreferences}
           isEditing={isEditingPreferences}
@@ -300,7 +291,6 @@ export default function MyPage() {
           onPreferenceRemove={handlePreferenceRemove}
         />
 
-        {/* 시간 선택 캘린더 컴포넌트 */}
         <TimeSelectionCalendar
           selectedTimes={selectedTimes}
           isEditing={isEditing}

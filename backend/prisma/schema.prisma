@@ -21,6 +21,7 @@ model User {
   college String
   major String
   admissionYear Int
+
 }
 
 model Preference {

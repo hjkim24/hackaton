@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { PrismaService } from '../libs/prisma/prisma.service'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -9,11 +10,11 @@ import { UserModule } from './user/user.module';
     ConfigModule.forRoot({
       envFilePath:
         process.env.NODE_ENV === 'production' ? '.env' : '.env.development',
-      isGlobal: true,
+      isGlobal: true
     }),
-    UserModule,
+    UserModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService]
 })
 export class AppModule {}

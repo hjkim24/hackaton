@@ -105,6 +105,16 @@ export class RecommendService {
       )
     })
 
-    return filteredUsers
+    // 동일 사용자 중복 제거 (user.id 기준)
+    const seen = new Set<number>()
+    const deduped = filteredUsers.filter((item) => {
+      const id = item.user?.id
+      if (id == null) return false
+      if (seen.has(id)) return false
+      seen.add(id)
+      return true
+    })
+
+    return deduped
   }
 }

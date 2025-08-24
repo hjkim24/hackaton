@@ -22,6 +22,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             <TabsTrigger
               value="recommendedpeople"
               className={cn(
+                "w-full",
                 "rounded-none rounded-t-lg transition-colors duration-200",
                 "text-base", // 글자 크기
                 "data-[state=active]:bg-primary",
@@ -37,6 +38,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             <TabsTrigger
               value="chatting"
               className={cn(
+                "w-full",
                 "rounded-none rounded-t-lg transition-colors duration-200",
                 "text-base",
                 "data-[state=active]:bg-primary",

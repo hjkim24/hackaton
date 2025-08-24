@@ -200,19 +200,87 @@ export default function MyPage() {
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">마이페이지</CardTitle>
-            <CardDescription>환영합니다, {user?.username}님!</CardDescription>
+            <CardDescription>
+              환영합니다, {user?.nickname || user?.username}님!
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-4">
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
                 {user?.avatar && (
                   <img
                     src={user.avatar}
-                    alt={user.username}
-                    className="h-16 w-16 rounded-full"
+                    alt={user.nickname || user.username}
+                    className="h-20 w-20 rounded-full object-cover"
                   />
                 )}
-                <h3 className="text-lg font-semibold">{user?.username}</h3>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold">
+                    {user?.nickname || user?.username}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    {user?.name} ({user?.username})
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {user?.college} {user?.major} • {user?.admissionYear}학번
+                  </p>
+                </div>
+              </div>
+
+              {/* 상세 정보 그리드 */}
+              <div className="grid grid-cols-1 gap-28 sm:grid-cols-2">
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-sm font-medium text-gray-600">
+                      나이
+                    </span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {user?.age}세
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm font-medium text-gray-600">
+                      성별
+                    </span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {user?.gender}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm font-medium text-gray-600">
+                      MBTI
+                    </span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {user?.mbti}
+                    </span>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-sm font-medium text-gray-600">
+                      대학교
+                    </span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {user?.college}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm font-medium text-gray-600">
+                      전공
+                    </span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {user?.major}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm font-medium text-gray-600">
+                      입학년도
+                    </span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {user?.admissionYear}년
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <div className="border-t pt-4">

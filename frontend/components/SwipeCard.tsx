@@ -69,7 +69,16 @@ export default function SwipeCard({ user, onSwipe }: SwipeCardProps) {
         />
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
           <h3 className="text-white font-bold text-xl">{user.nickname}</h3>
-          <p className="text-white/90 text-sm">{user.age}살</p>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {user.preferences.map((pref, index) => (
+              <span 
+                key={index} 
+                className="bg-white/20 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm"
+              >
+                {pref}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </motion.div>

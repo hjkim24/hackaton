@@ -129,7 +129,7 @@ export class UserService {
             major: true,
             admissionYear: true,
             Preference: true,
-            SpareTime: true,
+            SpareTime: true
           }
         }
       }

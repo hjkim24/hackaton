@@ -6,7 +6,7 @@ export class ChatService {
   constructor(private readonly prisma: PrismaService) {}
 
   // 사용자의 채팅방 목록 조회
-  async getUserChatRooms(userId: number): Promise<any[]> {
+  async getUserChatRooms(userId: number) {
     return await this.prisma.chatRoom.findMany({
       where: {
         participants: {
@@ -114,7 +114,7 @@ export class ChatService {
   }
 
   // 사용자가 채팅방에 속해 있는지 확인
-  async isUserInChatRoom(userId: number, chatRoomId: number): Promise<boolean> {
+  async isUserInChatRoom(userId: number, chatRoomId: number) {
     const count = await this.prisma.chatRoom.count({
       where: {
         id: chatRoomId,

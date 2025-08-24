@@ -19,4 +19,15 @@ export class RecommendController {
   ) {
     return await this.recommendService.getRecommnedations(userId, filter)
   }
+
+  @Get('/:userId/by-keyword')
+  async getRecommendationsByKeyword(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Query('keyword') keyword: string
+  ) {
+    return await this.recommendService.getRecommendationByKeyword(
+      userId,
+      keyword
+    )
+  }
 }

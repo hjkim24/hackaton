@@ -117,4 +117,27 @@ export class RecommendService {
 
     return deduped
   }
+
+  async getRecommendationByKeyword(userId: number, keyword: string) {
+    const users = await this.prisma.user.findMany({
+      where: {
+        id: { not: userId },
+        Preference: {
+          some: {
+            preference: keyword
+          }
+        }
+      },
+      select: {
+        id: true,
+        nickname: true,
+        age: true,
+        Preference: {
+          select: { preference: true }
+        }
+      }
+    })
+
+    return users
+  }
 }

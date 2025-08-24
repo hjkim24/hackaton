@@ -6,11 +6,10 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ReactNode } from "react";
-import { cn } from "@/lib/utils"; // cn 유틸리티 함수를 import 합니다.
+import { cn } from "@/lib/utils";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  // 경로의 마지막 부분을 탭의 값으로 사용합니다. (예: /chat/recommendedpeople -> recommendedpeople)
   const currentTab = pathname.split('/').pop() || 'recommendedpeople';
 
   return (
@@ -22,7 +21,6 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
           <Link href="/chat/recommendedpeople" passHref>
             <TabsTrigger
               value="recommendedpeople"
-              // 활성화된 탭에 주황색 배경, 둥근 모서리, 글자색을 적용합니다.
               className={cn(
                 "rounded-none rounded-t-lg transition-colors duration-200",
                 "text-base", // 글자 크기
@@ -38,7 +36,6 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
           <Link href="/chat/chatting" passHref>
             <TabsTrigger
               value="chatting"
-              // 활성화된 탭에 주황색 배경, 둥근 모서리, 글자색을 적용합니다.
               className={cn(
                 "rounded-none rounded-t-lg transition-colors duration-200",
                 "text-base",

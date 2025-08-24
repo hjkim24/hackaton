@@ -61,7 +61,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       client.emit('chatRooms', chatRooms)
 
       // 각 채팅방에 소켓 조인
-      chatRooms.forEach((room: any) => {
+      chatRooms.forEach((room) => {
         void client.join(`room-${room.id}`)
       })
 

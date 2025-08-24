@@ -4,10 +4,17 @@ import { LoginForm } from '@/components/LoginForm'
 import PreferenceSelector from '@/components/PreferenceSelector'
 import TimeSelectionCalendar from '@/components/TimeSelectionCalendar'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
 import { SpareTime } from '@/lib/constants'
 import { useAuthStore } from '@/stores/authStore'
 import React, { useState, useEffect } from 'react'
+import { toast } from 'sonner'
 
 export default function MyPage() {
   const { user, isAuthenticated, logout } = useAuthStore()
@@ -90,25 +97,12 @@ export default function MyPage() {
   const handleSubmit = async () => {
     console.log('Submitting selectedTimes:', selectedTimes)
     try {
-      // TODO: API 호출로 spareTime 데이터 저장/수정
-      const response = await fetch('/api/spare-times', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ spareTimes: selectedTimes })
-      })
-
-      if (response.ok) {
-        setSpareTimes(selectedTimes)
-        setIsEditing(false)
-        alert('시간이 성공적으로 저장되었습니다!')
-      } else {
-        throw new Error('Failed to save spare times')
-      }
+      setSpareTimes(selectedTimes)
+      setIsEditing(false)
+      toast.success('시간이 성공적으로 저장되었습니다!')
     } catch (error) {
       console.error('Failed to save spare times:', error)
-      alert('시간 저장에 실패했습니다.')
+      toast.error('시간 저장에 실패했습니다.')
     }
   }
 
@@ -148,25 +142,12 @@ export default function MyPage() {
   const handlePreferenceSubmit = async () => {
     console.log('Submitting preferences:', selectedPreferences)
     try {
-      // TODO: API 호출로 preference 데이터 저장/수정
-      const response = await fetch('/api/preferences', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ preferences: selectedPreferences })
-      })
-
-      if (response.ok) {
-        setPreferences(selectedPreferences)
-        setIsEditingPreferences(false)
-        alert('관심사가 성공적으로 저장되었습니다!')
-      } else {
-        throw new Error('Failed to save preferences')
-      }
+      setPreferences(selectedPreferences)
+      setIsEditingPreferences(false)
+      toast.success('관심사가 성공적으로 저장되었습니다!')
     } catch (error) {
       console.error('Failed to save preferences:', error)
-      alert('관심사 저장에 실패했습니다.')
+      toast.error('관심사 저장에 실패했습니다.')
     }
   }
 

@@ -21,7 +21,9 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="relative flex min-h-screen flex-col">
-      <main className="mb-16 flex-grow">{children}</main>
+      <main className="mb-16 flex-grow bg-gradient-to-br from-blue-50 to-purple-50">
+        {children}
+      </main>
 
       {/* 하단 네비게이션 */}
       <nav className="fixed bottom-0 z-10 flex h-16 w-full items-center justify-around bg-white shadow-2xl">

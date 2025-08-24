@@ -1,4 +1,5 @@
 import { PrismaClient, Days, Gender, User } from '@prisma/client'
+import { hash } from 'argon2'
 
 const prisma = new PrismaClient()
 
@@ -10,7 +11,7 @@ async function main() {
     // 기존 10명
     {
       username: 'user1',
-      password: 'pass1',
+      password: await hash('pass1'),
       nickname: 'nick1',
       name: 'Alice',
       gender: Gender.female,
@@ -21,7 +22,7 @@ async function main() {
     },
     {
       username: 'user2',
-      password: 'pass2',
+      password: await hash('pass2'),
       nickname: 'nick2',
       name: 'Bob',
       gender: Gender.male,
@@ -32,7 +33,7 @@ async function main() {
     },
     {
       username: 'user3',
-      password: 'pass3',
+      password: await hash('pass3'),
       nickname: 'nick3',
       name: 'Charlie',
       gender: Gender.male,
@@ -43,7 +44,7 @@ async function main() {
     },
     {
       username: 'user4',
-      password: 'pass4',
+      password: await hash('pass4'),
       nickname: 'nick4',
       name: 'Diana',
       gender: Gender.female,
@@ -54,7 +55,7 @@ async function main() {
     },
     {
       username: 'user5',
-      password: 'pass5',
+      password: await hash('pass5'),
       nickname: 'nick5',
       name: 'Eve',
       gender: Gender.female,
@@ -65,7 +66,7 @@ async function main() {
     },
     {
       username: 'user6',
-      password: 'pass6',
+      password: await hash('pass6'),
       nickname: 'nick6',
       name: 'Frank',
       gender: Gender.male,
@@ -76,7 +77,7 @@ async function main() {
     },
     {
       username: 'user7',
-      password: 'pass7',
+      password: await hash('pass7'),
       nickname: 'nick7',
       name: 'Grace',
       gender: Gender.female,
@@ -87,7 +88,7 @@ async function main() {
     },
     {
       username: 'user8',
-      password: 'pass8',
+      password: await hash('pass8'),
       nickname: 'nick8',
       name: 'Hank',
       gender: Gender.male,
@@ -98,7 +99,7 @@ async function main() {
     },
     {
       username: 'user9',
-      password: 'pass9',
+      password: await hash('pass9'),
       nickname: 'nick9',
       name: 'Ivy',
       gender: Gender.female,
@@ -109,7 +110,7 @@ async function main() {
     },
     {
       username: 'user10',
-      password: 'pass10',
+      password: await hash('pass10'),
       nickname: 'nick10',
       name: 'Jack',
       gender: Gender.male,
@@ -122,7 +123,7 @@ async function main() {
     // 새로 추가 10명
     {
       username: 'user11',
-      password: 'pass11',
+      password: await hash('pass11'),
       nickname: 'nick11',
       name: 'Karen',
       gender: Gender.female,
@@ -133,7 +134,7 @@ async function main() {
     },
     {
       username: 'user12',
-      password: 'pass12',
+      password: await hash('pass12'),
       nickname: 'nick12',
       name: 'Leo',
       gender: Gender.male,
@@ -144,7 +145,7 @@ async function main() {
     },
     {
       username: 'user13',
-      password: 'pass13',
+      password: await hash('pass13'),
       nickname: 'nick13',
       name: 'Mona',
       gender: Gender.female,
@@ -155,7 +156,7 @@ async function main() {
     },
     {
       username: 'user14',
-      password: 'pass14',
+      password: await hash('pass14'),
       nickname: 'nick14',
       name: 'Nathan',
       gender: Gender.male,
@@ -166,7 +167,7 @@ async function main() {
     },
     {
       username: 'user15',
-      password: 'pass15',
+      password: await hash('pass15'),
       nickname: 'nick15',
       name: 'Olivia',
       gender: Gender.female,
@@ -177,7 +178,7 @@ async function main() {
     },
     {
       username: 'user16',
-      password: 'pass16',
+      password: await hash('pass16'),
       nickname: 'nick16',
       name: 'Peter',
       gender: Gender.male,
@@ -188,7 +189,7 @@ async function main() {
     },
     {
       username: 'user17',
-      password: 'pass17',
+      password: await hash('pass17'),
       nickname: 'nick17',
       name: 'Quinn',
       gender: Gender.female,
@@ -199,7 +200,7 @@ async function main() {
     },
     {
       username: 'user18',
-      password: 'pass18',
+      password: await hash('pass18'),
       nickname: 'nick18',
       name: 'Ryan',
       gender: Gender.male,
@@ -210,7 +211,7 @@ async function main() {
     },
     {
       username: 'user19',
-      password: 'pass19',
+      password: await hash('pass19'),
       nickname: 'nick19',
       name: 'Sophia',
       gender: Gender.female,
@@ -221,7 +222,7 @@ async function main() {
     },
     {
       username: 'user20',
-      password: 'pass20',
+      password: await hash('pass20'),
       nickname: 'nick20',
       name: 'Tom',
       gender: Gender.male,

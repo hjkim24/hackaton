@@ -19,12 +19,16 @@
     "test:debug": "NODE_ENV=development node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "NODE_ENV=development jest --config ./test/jest-e2e.json",
     "prisma:generate": "prisma generate",
+    "prisma:seed": "prisma db seed",
     "prisma:migrate:dev": "NODE_ENV=development prisma migrate dev",
     "prisma:migrate:deploy": "NODE_ENV=production prisma migrate deploy",
     "prisma:studio": "NODE_ENV=development prisma studio",
     "db:push": "NODE_ENV=development prisma db push",
     "db:reset:dev": "NODE_ENV=development prisma migrate reset",
     "db:reset:prod": "NODE_ENV=production prisma migrate reset"
+  },
+  "prisma": {
+    "seed": "ts-node -T prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

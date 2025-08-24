@@ -1,0 +1,22 @@
+meta {
+  name: Push Like
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/user/like
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "likedById": 2,
+    "likedToId": 3
+  }
+}
+
+settings {
+  encodeUrl: true
+}

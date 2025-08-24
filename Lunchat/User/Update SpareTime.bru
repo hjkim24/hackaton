@@ -1,0 +1,42 @@
+meta {
+  name: Update SpareTime
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/user/spare-time?userId=1
+  body: json
+  auth: inherit
+}
+
+params:query {
+  userId: 1
+}
+
+body:json {
+  {
+    "spareTimes" : [
+      {
+        "spareTime" : "09:00",
+        "day" : "FRI"
+      },
+      {
+        "spareTime" : "09:00",
+        "day" : "TUE"
+      },
+      {
+        "spareTime" : "09:00",
+        "day" : "WED"
+      },
+      {
+        "spareTime" : "09:00",
+        "day" : "THU"
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

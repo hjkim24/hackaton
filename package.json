@@ -15,6 +15,10 @@
     "tailwindcss": "^4.1.12"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^6.1.19",
+    "@fullcalendar/interaction": "^6.1.19",
+    "@fullcalendar/react": "^6.1.19",
+    "@fullcalendar/timegrid": "^6.1.19",
     "@nestjs/config": "^4.0.2",
     "@nestjs/platform-socket.io": "^11.1.6",
     "@nestjs/websockets": "^11.1.6",

@@ -6,73 +6,66 @@ import { useEffect, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import RecommendedPeopleCard from "@/components/RecommendedPeopleCard";
+import SwipeCard from "@/components/SwipeCard"; // SwipeCard 컴포넌트를 import 합니다.
+import { AnimatePresence } from "framer-motion";
 
-// Prisma User 모델에 맞춘 타입 정의
+// Prisma User 모델에 맞춘 타입 정의 (age 필드 사용)
 interface UserProfile {
   id: number;
   photo?: string;
   nickname: string;
-  admissionYear: number;
+  age: number; // admissionYear 대신 age 사용
 }
 
-// 백엔드 API 대신 사용할 가짜 데이터
+// 가짜 데이터 (age 필드 포함)
 const mockUsers: UserProfile[] = [
-  { id: 1, nickname: "성균관선배", admissionYear: 21, photo: "/src/bob.png" },
-  { id: 2, nickname: "율전다람쥐", admissionYear: 23, photo: "/src/charlie.png" },
-  { id: 3, nickname: "명륜학우", admissionYear: 24, photo: "/src/john.png" },
-  { id: 4, nickname: "킹고킹고", admissionYear: 22, photo: "/src/alice.png" },
+  { id: 1, nickname: "성균관선배", age: 25, photo: "/src/bob.png" },
+  { id: 2, nickname: "율전다람쥐", age: 23, photo: "/src/charlie.png" },
+  { id: 3, nickname: "명륜학우", age: 24, photo: "/src/john.png" },
+  { id: 4, nickname: "킹고킹고", age: 22, photo: "/src/alice.png" },
 ];
 
 export default function PreferenceDetailPage() {
   const { preference } = useParams();
-  const [users, setUsers] = useState<UserProfile[]>([]);
+  const [profiles, setProfiles] = useState<UserProfile[]>([]);
+  const [liked, setLiked] = useState<UserProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // preference 값이 존재하는지 확인하고 디코딩합니다.
   const decodedPreference = Array.isArray(preference)
-    ? decodeURIComponent(preference[0] || "") // 배열인 경우 첫번째 요소를 디코딩
-    : typeof preference === 'string' 
-      ? decodeURIComponent(preference) // 문자열인 경우 디코딩
-      : undefined; // 그 외의 경우 (undefined) undefined로 설정
+    ? decodeURIComponent(preference[0] || "")
+    : typeof preference === 'string'
+      ? decodeURIComponent(preference)
+      : undefined;
 
-  // useEffect를 사용하여 컴포넌트가 마운트될 때 데이터를 불러옵니다.
+  const handleSwipe = (user: UserProfile, direction: "left" | "right") => {
+    if (direction === "right") {
+      setLiked((prev) => [...prev, user]);
+    }
+    setProfiles((prev) => prev.filter((p) => p.id !== user.id));
+  };
+  
+  const resetProfiles = () => {
+    setProfiles(mockUsers);
+    setLiked([]);
+  };
+
   useEffect(() => {
-    // decodedPreference 값이 있을 때만 데이터를 불러오도록 조건 추가
     if (!decodedPreference) {
       setIsLoading(false);
       return;
     }
     
-    // --- 추후 이 부분에 백엔드 API 호출 코드를 추가합니다 ---
-    // 예시:
-    // const fetchUsers = async () => {
-    //   setIsLoading(true);
-    //   try {
-    //     const response = await fetch(`/api/users?preference=${decodedPreference}`);
-    //     const data = await response.json();
-    //     setUsers(data);
-    //   } catch (error) {
-    //     console.error("Failed to fetch users:", error);
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // };
-    // fetchUsers();
-    
-    // 현재는 가짜 데이터를 사용합니다.
-    setUsers(mockUsers);
+    setProfiles(mockUsers);
     setIsLoading(false);
   }, [decodedPreference]);
 
-  // decodedPreference가 undefined인 경우 로딩 상태 표시
   if (!decodedPreference || isLoading) {
     return <div>로딩 중...</div>;
   }
 
   return (
-    <div className="p-4 space-y-6">
-      <header className="flex items-center space-x-2">
+    <div className="p-4 space-y-6 flex flex-col items-center justify-center min-h-screen">
+      <header className="flex items-center space-x-2 w-full max-w-md">
         <Link href="/search">
           <ChevronLeft className="h-6 w-6" />
         </Link>
@@ -81,15 +74,47 @@ export default function PreferenceDetailPage() {
         </h1>
       </header>
 
-      {users.length > 0 ? (
-        <div className="grid grid-cols-2 gap-4">
-          {users.map((user) => (
-            <RecommendedPeopleCard key={user.id} user={user} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center text-gray-500 mt-10">
-          <p>해당 관심사를 가진 사용자가 없습니다.</p>
+      <div className="relative w-80 h-96 mb-8">
+        <AnimatePresence>
+          {profiles.length > 0 ? (
+            profiles.slice(0, 1).map((user) => (
+              <SwipeCard
+                key={user.id}
+                user={user}
+                onSwipe={(direction) => handleSwipe(user, direction)}
+              />
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-center">
+              <div className="text-6xl mb-4">🎉</div>
+              <p className="text-xl font-semibold text-gray-700 mb-2">
+                모든 프로필을 확인했습니다!
+              </p>
+              <button
+                onClick={resetProfiles}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full font-medium transition-colors"
+              >
+                다시 시작하기
+              </button>
+            </div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {profiles.length > 0 && (
+        <div className="flex gap-4">
+          <button
+            onClick={() => handleSwipe(profiles[0], "left")}
+            className="bg-red-500 hover:bg-red-600 text-white p-4 rounded-full shadow-lg transition-colors"
+          >
+            ❌
+          </button>
+          <button
+            onClick={() => handleSwipe(profiles[0], "right")}
+            className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-colors"
+          >
+            ❤️
+          </button>
         </div>
       )}
     </div>

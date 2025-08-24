@@ -7,6 +7,7 @@ import { SpareTimesDto } from './dto/spare-time.dto'
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  // SpareTime 관련 API
   async createSpareTime(userId: number, dto: SpareTimesDto) {
     const createPromises = dto.spareTimes.map((timeDto) =>
       this.prisma.spareTime.create({
@@ -50,6 +51,7 @@ export class UserService {
     })
   }
 
+  // Preference 관련 API
   async createPreference(userId: number, dto: PreferencesDto) {
     const createPromises = dto.preferences.map((prefDto) =>
       this.prisma.preference.create({
@@ -88,6 +90,26 @@ export class UserService {
     // 사용자의 모든 선호도 반환
     return this.prisma.preference.findMany({
       where: { userId }
+    })
+  }
+
+  async pushLike(likedById: number, likedToId: number) {
+    const isExist = await this.prisma.like.findFirst({
+      where: {
+        likedByUserId: likedById,
+        likedToUserId: likedToId
+      }
+    })
+
+    if (isExist) {
+      return isExist
+    }
+
+    return this.prisma.like.create({
+      data: {
+        likedByUserId: likedById,
+        likedToUserId: likedToId
+      }
     })
   }
 }

@@ -39,4 +39,12 @@ export class UserController {
   ) {
     return await this.userService.updatePreference(userId, preferenceDto)
   }
+
+  @Post()
+  async pushLike(
+    @Body('likedById', IDValidationPipe) likedById: number,
+    @Body('likedToId', IDValidationPipe) likedToId: number
+  ) {
+    return await this.userService.pushLike(likedById, likedToId)
+  }
 }

@@ -9,9 +9,9 @@ type Profile = {
 }
 
 const profilesData: Profile[] = [
-  { id: 1, name: "Alice", image: "/alice.jpg" },
-  { id: 2, name: "Bob", image: "/bob.jpg" },
-  { id: 3, name: "Charlie", image: "/charlie.jpg" }
+  { id: 1, name: "Alice", image: "/src/alice.png" },
+  { id: 2, name: "Bob", image: "/src/bob.png" },
+  { id: 3, name: "Charlie", image: "/src/charlie.png" }
 ]
 
 export default function SwipeCards() {

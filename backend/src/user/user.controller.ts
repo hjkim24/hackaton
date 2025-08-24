@@ -1,14 +1,7 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete
-} from '@nestjs/common'
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
+import { Body, Controller, Post, Put, Query } from '@nestjs/common'
+import { IDValidationPipe } from 'libs/pipe/src/id-validation.pipe'
+import { PreferencesDto } from './dto/preference.dto'
+import { SpareTimesDto } from './dto/spare-time.dto'
 import { UserService } from './user.service'
 
 @Controller('user')
@@ -16,27 +9,34 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto)
+  async createSpareTime(
+    @Query('userId', IDValidationPipe) userId: number,
+    @Body() spareTimeDto: SpareTimesDto
+  ) {
+    return await this.userService.createSpareTime(userId, spareTimeDto)
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll()
+  @Put()
+  async updateSpareTime(
+    @Query('userId', IDValidationPipe) userId: number,
+    @Body() spareTimeDto: SpareTimesDto
+  ) {
+    return await this.userService.updateSpareTime(userId, spareTimeDto)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id)
+  @Post()
+  async createPreference(
+    @Query('userId', IDValidationPipe) userId: number,
+    @Body() preferenceDto: PreferencesDto
+  ) {
+    return await this.userService.createPreference(userId, preferenceDto)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto)
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id)
+  @Put()
+  async updatePreference(
+    @Query('userId', IDValidationPipe) userId: number,
+    @Body() preferenceDto: PreferencesDto
+  ) {
+    return await this.userService.updatePreference(userId, preferenceDto)
   }
 }

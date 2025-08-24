@@ -18,7 +18,7 @@ export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {
   }
 
   return (
-    <Card className="flex-1 w-full rounded-2xl overflow-hidden shadow-md">
+    <Card className="flex-1 w-full rounded-2xl overflow-hidden shadow-md gap-0">
       <div className="relative w-full h-40 bg-secondary">
         {user.photo && (
           <Avatar className="w-full h-full rounded-none">
@@ -31,11 +31,11 @@ export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {
         <div className="flex items-center space-x-2">
           {user.nickname && (
             <div className="flex flex-col">
-              <div>
+              <div className="flex gap-1">
                 <p className="font-bold text-lg">{user.nickname}</p>
                 <p className="text-gray-500">{user.age}</p>
               </div>
-              <div className="flex flex-wrap gap-2 mt-2">
+              <div className="flex flex-wrap mt-2">
             {user.preferences.map((pref, index) => (
               <span 
                 key={index} 

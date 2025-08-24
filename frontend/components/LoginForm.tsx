@@ -7,10 +7,11 @@ import { useAuthStore } from '@/stores/authStore';
 
 interface LoginFormProps {
   onSuccess?: () => void;
-  onCancel?: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onCancel }) => {
+export const LoginForm = ({
+  onSuccess,
+}: LoginFormProps) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -98,16 +99,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onCancel }) => 
             >
               {isLoading ? '로그인 중...' : '로그인'}
             </Button>
-            {onCancel && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onCancel}
-                disabled={isLoading}
-              >
-                취소
-              </Button>
-            )}
           </div>
         </form>
 

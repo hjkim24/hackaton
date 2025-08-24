@@ -8,46 +8,20 @@ import { useAuthStore } from '@/stores/authStore';
 
 export default function MyPage() {
   const { user, isAuthenticated, logout } = useAuthStore();
-  const [showLoginForm, setShowLoginForm] = useState(false);
 
   const handleLogout = () => {
     logout();
-    setShowLoginForm(false);
   };
 
   const handleLoginSuccess = () => {
-    setShowLoginForm(false);
+    // 로그인 성공 시 자동으로 상태가 업데이트됨
   };
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 py-6 px-4">
-        <div className="max-w-md mx-auto">
-          {!showLoginForm ? (
-            <div className="text-center">
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold">마이페이지</CardTitle>
-                  <CardDescription>
-                    로그인하여 개인 정보를 확인하세요
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    onClick={() => setShowLoginForm(true)}
-                    className="w-full"
-                  >
-                    로그인하기
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          ) : (
-            <LoginForm 
-              onSuccess={handleLoginSuccess}
-              onCancel={() => setShowLoginForm(false)}
-            />
-          )}
+      <div className="min-h-screen bg-gray-50 py-6 px-4 flex items-center justify-center">
+        <div className="max-w-md mx-auto w-full">
+          <LoginForm onSuccess={handleLoginSuccess} />
         </div>
       </div>
     );

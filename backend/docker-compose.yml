@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  pg:
+    image: postgres:17.4
+    container_name: hackaton-local
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5435:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

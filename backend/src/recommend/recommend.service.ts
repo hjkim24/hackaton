@@ -75,6 +75,11 @@ export class RecommendService {
         day: dayEnum!,
         userId: {
           not: userId
+        },
+        user: {
+          likedBy: {
+            none: { likedByUserId: userId }
+          }
         }
       },
       select: {
@@ -125,6 +130,11 @@ export class RecommendService {
         Preference: {
           some: {
             preference: keyword
+          }
+        },
+        likedBy: {
+          none: {
+            likedByUserId: userId
           }
         }
       },

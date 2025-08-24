@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'libs'
+import { LikeDto } from './dto/like.dto'
 import { PreferencesDto } from './dto/preference.dto'
 import { SpareTimesDto } from './dto/spare-time.dto'
 
@@ -93,11 +94,11 @@ export class UserService {
     })
   }
 
-  async pushLike(likedById: number, likedToId: number) {
+  async pushLike(dto: LikeDto) {
     const isExist = await this.prisma.like.findFirst({
       where: {
-        likedByUserId: likedById,
-        likedToUserId: likedToId
+        likedByUserId: dto.likedById,
+        likedToUserId: dto.likedToId
       }
     })
 
@@ -107,9 +108,33 @@ export class UserService {
 
     return this.prisma.like.create({
       data: {
-        likedByUserId: likedById,
-        likedToUserId: likedToId
+        likedByUserId: dto.likedById,
+        likedToUserId: dto.likedToId
       }
     })
+  }
+
+  async getSexyPeople(userId: number) {
+    const sexyPeople = await this.prisma.like.findMany({
+      where: {
+        likedByUserId: userId
+      },
+      select: {
+        likedToUser: {
+          select: {
+            id: true,
+            nickname: true,
+            gender: true,
+            college: true,
+            major: true,
+            admissionYear: true,
+            Preference: true,
+            SpareTime: true,
+          }
+        }
+      }
+    })
+
+    return sexyPeople
   }
 }

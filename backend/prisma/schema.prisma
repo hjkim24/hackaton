@@ -8,6 +8,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
-// model newtable {
-// }
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+
+}

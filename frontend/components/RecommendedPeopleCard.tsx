@@ -5,25 +5,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+// Prisma User 모델에 맞춘 타입 정의
 interface UserProfile {
   photo?: string;
   nickname: string;
-  admissionYear: number;
+  age: number; // admissionYear 대신 age를 직접 사용
 }
-
-const calculateAge = (admissionYear: number) => {
-  const currentYear = new Date().getFullYear();
-  // 25학번 -> 2025년 입학, 19세라고 가정
-  const age = currentYear - admissionYear + 19;
-  return age;
-};
 
 export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {
   if (!user) {
     return null;
   }
-  
-  const age = calculateAge(user.admissionYear);
 
   return (
     <Card className="flex-1 w-full rounded-2xl overflow-hidden shadow-md">
@@ -40,7 +32,7 @@ export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {
           {user.nickname && (
             <>
               <p className="font-bold text-lg">{user.nickname}</p>
-              <p className="text-gray-500">{age}</p>
+              <p className="text-gray-500">{user.age}</p>
             </>
           )}
         </div>

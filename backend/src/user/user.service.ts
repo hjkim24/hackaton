@@ -113,4 +113,28 @@ export class UserService {
       }
     })
   }
+
+  async getSexyPeople(userId: number) {
+    const sexyPeople = await this.prisma.like.findMany({
+      where: {
+        likedByUserId: userId
+      },
+      select: {
+        likedToUser: {
+          select: {
+            id: true,
+            nickname: true,
+            gender: true,
+            college: true,
+            major: true,
+            admissionYear: true,
+            Preference: true,
+            SpareTime: true,
+          }
+        }
+      }
+    })
+
+    return sexyPeople
+  }
 }

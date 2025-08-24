@@ -3,9 +3,9 @@ import { IsNotEmpty, IsNumber } from 'class-validator'
 export class LikeDto {
   @IsNotEmpty()
   @IsNumber()
-  likedById: number
+  likedById!: number
 
   @IsNotEmpty()
   @IsNumber()
-  likedToId: number
+  likedToId!: number
 }

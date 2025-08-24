@@ -1,9 +1,9 @@
-import { Body, Controller, Post, Put, Query } from '@nestjs/common'
+import { Body, Controller, Post, Put, Query, Get, Param } from '@nestjs/common'
 import { IDValidationPipe } from 'libs/pipe/src/id-validation.pipe'
+import { LikeDto } from './dto/like.dto'
 import { PreferencesDto } from './dto/preference.dto'
 import { SpareTimesDto } from './dto/spare-time.dto'
 import { UserService } from './user.service'
-import { LikeDto } from './dto/like.dto'
 
 @Controller('user')
 export class UserController {
@@ -42,9 +42,14 @@ export class UserController {
   }
 
   @Post()
-  async pushLike(
-    @Body() likeDto: LikeDto
-  ) {
+  async pushLike(@Body() likeDto: LikeDto) {
     return await this.userService.pushLike(likeDto)
+  }
+
+  @Get(":userId/like-list")
+  async getSexyPeople(
+    @Param('userId', IDValidationPipe) userId: number
+  ) {
+    return await this.userService.getSexyPeople(userId)
   }
 }

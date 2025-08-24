@@ -195,7 +195,7 @@ export default function MyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-6">
+    <div className="min-h-screen px-4 py-6">
       <div className="mx-auto max-w-2xl">
         <Card className="mb-6">
           <CardHeader>

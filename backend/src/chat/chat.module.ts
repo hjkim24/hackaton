@@ -1,10 +1,9 @@
-import { PrismaService } from '@libs/prisma/index'
 import { Module } from '@nestjs/common'
 import { ChatGateway } from './chat.gateway'
 import { ChatService } from './chat.service'
 
 @Module({
-  imports: [PrismaService],
+  imports: [],
   providers: [ChatGateway, ChatService],
   exports: [ChatService]
 })

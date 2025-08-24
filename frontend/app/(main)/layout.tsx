@@ -29,7 +29,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       <main className="flex-grow mb-16">{children}</main>
 
       {/* 하단 네비게이션 */}
-      <nav className="h-16 bottom-0 w-full bg-white flex justify-around items-center shadow-2xl fixed">
+      <nav className="fixed left-0 h-16 bottom-0 w-full bg-white flex justify-around items-center shadow-2xl">
         <Link href="/">
           <GrHomeRounded
             className={cn("h-10 w-10 p-1", isCurrentTab("") && "fill-black")}

@@ -1,4 +1,4 @@
-import { PrismaClient, Days, Gender, User } from '@prisma/client'
+import { Days, Gender, PrismaClient, User } from '@prisma/client'
 
 const prisma = new PrismaClient()
 

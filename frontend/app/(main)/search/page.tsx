@@ -15,37 +15,6 @@ import {
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
-
-// app/(main)/search/page.tsx
 
 // 1. 노션 내용을 바탕으로 관심사를 카테고리별로 그룹화합니다.
 const interestCategories = [

@@ -55,15 +55,21 @@ export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {
               </div>
               <p className="text-gray-600 text-sm mt-1">{user.college} {user.major}</p>
               <div className="flex flex-wrap gap-1 mt-2">
-                {user.Preference.slice(0, 3).map((pref) => (
-                  <span 
-                    key={pref.id} 
-                    className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full"
-                  >
-                    {pref.preference}
+                {user.Preference && user.Preference.length > 0 ? (
+                  user.Preference.slice(0, 3).map((pref, index) => (
+                    <span 
+                      key={pref.id || `pref-${index}`} 
+                      className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full"
+                    >
+                      {pref.preference}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-gray-500 text-xs px-2 py-1">
+                    선호사항 없음
                   </span>
-                ))}
-                {user.Preference.length > 3 && (
+                )}
+                {user.Preference && user.Preference.length > 3 && (
                   <span className="text-gray-500 text-xs px-2 py-1">
                     +{user.Preference.length - 3}
                   </span>

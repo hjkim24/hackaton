@@ -198,12 +198,6 @@ export default function MyPage() {
     <div className="min-h-screen px-4 py-6">
       <div className="mx-auto max-w-2xl">
         <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">마이페이지</CardTitle>
-            <CardDescription>
-              환영합니다, {user?.nickname || user?.username}님!
-            </CardDescription>
-          </CardHeader>
           <CardContent>
             <div className="space-y-6">
               <div className="flex items-start space-x-4">

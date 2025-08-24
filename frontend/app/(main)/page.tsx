@@ -1,8 +1,9 @@
 "use client";
 
 import SwipeContainer from "@/components/SwipeContainer";
+import MainPageHeader from "./_components/MainPageHeader";
 
-type Profile = {
+type UserProfile = {
   id: number
   age: number
   sex: "male" | "female"
@@ -19,7 +20,7 @@ type Profile = {
   likeTo: string[]
 }
 
-const profilesData: Profile[] = [
+const profilesData: UserProfile[] = [
   { 
     id: 1, 
     age: 22, 
@@ -132,10 +133,11 @@ const profilesData: Profile[] = [
 
 export default function SwipePage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">런챗 매칭</h1>
-      
-      <SwipeContainer initialProfiles={profilesData} />
+    <div>
+      <MainPageHeader />
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4">
+        <SwipeContainer initialProfiles={profilesData} />
+      </div>
     </div>
   );
 }

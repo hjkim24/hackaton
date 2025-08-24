@@ -5,11 +5,21 @@ import { AnimatePresence } from "framer-motion";
 import SwipeCard from "@/components/SwipeCard";
 import LikedProfiles from "@/components/LikedProfiles";
 
-interface UserProfile {
-  id: number;
-  nickname: string;
-  age: number;
-  photo?: string;
+type UserProfile = {
+  id: number
+  age: number
+  sex: "male" | "female"
+  college: string
+  major: string
+  username: string
+  nickname: string
+  name: string
+  admissionYear: number
+  image: string
+  preferences: string[]
+  spareTime: { id: number, spareTime: string, user: string, day: string }[]
+  likeBy: string[]
+  likeTo: string[]
 }
 
 interface SwipeContainerProps {
@@ -34,7 +44,7 @@ export default function SwipeContainer({ initialProfiles }: SwipeContainerProps)
 
   return (
     <>
-      <div className="relative w-80 h-96 mb-8">
+      <div className="relative w-80 h-96 mt-20 mb-8">
         <AnimatePresence>
           {profiles.length > 0 ? (
             profiles.slice(0, 1).map((profile) => (
@@ -63,24 +73,6 @@ export default function SwipeContainer({ initialProfiles }: SwipeContainerProps)
 
       {/* 좋아한 프로필 목록 컴포넌트 호출 */}
       <LikedProfiles likedUsers={liked} />
-
-      {/* 수동 스와이프 버튼 */}
-      {profiles.length > 0 && (
-        <div className="flex gap-4">
-          <button
-            onClick={() => handleSwipe(profiles[0], "left")}
-            className="bg-red-500 hover:bg-red-600 text-white p-4 rounded-full shadow-lg transition-colors"
-          >
-            ❌
-          </button>
-          <button
-            onClick={() => handleSwipe(profiles[0], "right")}
-            className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-colors"
-          >
-            ❤️
-          </button>
-        </div>
-      )}
     </>
   );
 }

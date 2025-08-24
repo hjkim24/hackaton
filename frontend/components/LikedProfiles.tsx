@@ -6,7 +6,7 @@ interface UserProfile {
   id: number;
   nickname: string;
   age: number;
-  photo?: string;
+  image: string;
 }
 
 interface LikedProfilesProps {
@@ -28,7 +28,7 @@ export default function LikedProfiles({ likedUsers }: LikedProfilesProps) {
           <div key={profile.id} className="text-center">
             <div className="relative w-16 h-16 mx-auto mb-2">
               <Image
-                src={profile.photo || "/src/placeholder.png"}
+                src={profile.image || "/src/placeholder.png"}
                 alt={profile.nickname}
                 fill
                 className="rounded-full object-cover border-2 border-green-400"

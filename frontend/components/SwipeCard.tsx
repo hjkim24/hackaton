@@ -4,7 +4,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react"; // useState import
+import { useState } from "react";
 
 interface UserProfile {
   id: number;
@@ -19,7 +19,6 @@ interface SwipeCardProps {
 }
 
 export default function SwipeCard({ user, onSwipe }: SwipeCardProps) {
-  // 카드가 사라질 방향을 저장할 state
   const [exitX, setExitX] = useState(0);
 
   return (
@@ -31,16 +30,15 @@ export default function SwipeCard({ user, onSwipe }: SwipeCardProps) {
       dragElastic={0.8}
       onDragEnd={(_, info) => {
         if (info.offset.x > 100) {
-          setExitX(300); // 오른쪽으로 사라지도록 설정
+          setExitX(300); 
           onSwipe("right");
         } else if (info.offset.x < -100) {
-          setExitX(-300); // 왼쪽으로 사라지도록 설정
+          setExitX(-300); 
           onSwipe("left");
         }
       }}
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      // exitX state를 사용해 동적으로 사라지는 방향 결정
       exit={{
         x: exitX,
         opacity: 0,

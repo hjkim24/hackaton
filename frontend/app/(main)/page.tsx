@@ -4,9 +4,8 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import SwipeCard from "@/components/SwipeCard"; // 재사용할 SwipeCard 컴포넌트 import
+import SwipeCard from "@/components/SwipeCard";
 
-// Prisma 스키마와 일치하는 UserProfile 타입 정의
 interface UserProfile {
   id: number;
   nickname: string;
@@ -14,7 +13,7 @@ interface UserProfile {
   photo?: string;
 }
 
-// 가짜 데이터 (age 필드 포함)
+// 가짜 데이터
 const profilesData: UserProfile[] = [
   { id: 1, nickname: "Alice", age: 22, photo: "/src/alice.png" },
   { id: 2, nickname: "Bob", age: 25, photo: "/src/bob.png" },

@@ -31,21 +31,21 @@ type LikedToUser = {
 }
 
 type LikeListItem = {
-  likedToUser: LikedToUser
+  user: LikedToUser
 }
 
 export default function SwipePage() {
   const [profiles, setProfiles] = useState<LikedToUser[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const { setLikedUsers } = useUserStore()
+  const { selectedTime } = useUserStore()
 
   useEffect(() => {
-    const fetchLikeList = async () => {
+    const fetchRecommendations = async () => {
       try {
         setLoading(true)
-        const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:4000'}/user/2/like-list`
-        console.log('Fetching from:', apiUrl)
+        const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:4000'}/recommend/2?day=${selectedTime.day}&startTime=${selectedTime.startTime}&endTime=${selectedTime.endTime}`
+        console.log('Fetching recommendations from:', apiUrl)
         
         const response = await fetch(apiUrl, {
           method: 'GET',
@@ -59,8 +59,8 @@ export default function SwipePage() {
         }
         
         const data: LikeListItem[] = await response.json()
-        console.log('Received data:', data)
-        const userProfiles = data.map(item => item.likedToUser)
+        console.log('Received recommendations:', data)
+        const userProfiles = data.map(item => item.user) // item.likedToUser -> item.user로 변경
         setProfiles(userProfiles)
         
         // API에서 받아온 데이터는 전역 스토어에 저장하지 않음
@@ -77,8 +77,11 @@ export default function SwipePage() {
       }
     }
 
-    fetchLikeList()
-  }, [])
+    // selectedTime이 변경될 때마다 API 호출
+    if (selectedTime.day && selectedTime.startTime && selectedTime.endTime) {
+      fetchRecommendations()
+    }
+  }, [selectedTime])
 
   if (loading) {
     return (

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
 import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor, DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useUserStore } from "@/stores/userStore";
 import {
   Dialog,
   DialogContent,
@@ -105,9 +106,10 @@ export default function MainPageHeader() {
   const [startTimes, setStartTimes] = useState<Item[]>(initialStartTimes);
   const [endTimes, setEndTimes] = useState<Item[]>(initialEndTimes);
   const [selectedDay, setSelectedDay] = useState<Item>(days[1]); // 화요일
-  const [selectedStartTime, setSelectedStartTime] = useState<Item>(startTimes[8]); // 12:00
-  const [selectedEndTime, setSelectedEndTime] = useState<Item>(endTimes[10]); // 13:00
+  const [selectedStartTime, setSelectedStartTime] = useState<Item>(startTimes[2]); // 09:00
+  const [selectedEndTime, setSelectedEndTime] = useState<Item>(endTimes[30]); // 23:00
   const [isScrolling, setIsScrolling] = useState(false);
+  const { setSelectedTime } = useUserStore();
 
   const dayRefs = useRef<(HTMLDivElement | null)[]>([]);
   const startTimeRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -213,6 +215,26 @@ export default function MainPageHeader() {
       setSelectedItem(newSelectedItem);
     }
   };
+
+  // 선택된 시간이 변경될 때마다 전역 스토어에 저장
+  useEffect(() => {
+    const dayMapping: { [key: string]: string } = {
+      '월': 'MON',
+      '화': 'TUE', 
+      '수': 'WED',
+      '목': 'THU',
+      '금': 'FRI'
+    };
+
+    const mappedDay = dayMapping[selectedDay.content];
+    if (mappedDay) {
+      setSelectedTime({
+        day: mappedDay,
+        startTime: selectedStartTime.content,
+        endTime: selectedEndTime.content
+      });
+    }
+  }, [selectedDay, selectedStartTime, selectedEndTime, setSelectedTime]);
 
   const dayString = `${selectedDay.content} ${selectedStartTime.content}~${selectedEndTime.content}`;
 

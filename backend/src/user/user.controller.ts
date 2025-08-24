@@ -46,10 +46,8 @@ export class UserController {
     return await this.userService.pushLike(likeDto)
   }
 
-  @Get(":userId/like-list")
-  async getSexyPeople(
-    @Param('userId', IDValidationPipe) userId: number
-  ) {
+  @Get(':userId/like-list')
+  async getSexyPeople(@Param('userId', IDValidationPipe) userId: number) {
     return await this.userService.getSexyPeople(userId)
   }
 }

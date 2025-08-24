@@ -24,10 +24,12 @@ model User {
   major         String
   admissionYear Int
 
-  Preference Preference[]
-  likedBy    Like[]       @relation("liked_by")
-  likeTo     Like[]       @relation("like_to")
-  SpareTime  SpareTime[]
+  Preference   Preference[]
+  likedBy      Like[]       @relation("liked_by")
+  likeTo       Like[]       @relation("like_to")
+  SpareTime    SpareTime[]
+  sentMessages Message[]    @relation("sender")
+  chatRooms    ChatRoom[]   @relation("participants")
 }
 
 enum days {
@@ -64,4 +66,25 @@ model Like {
   likedToUserId Int?
 
   @@unique([likedByUserId, likedToUserId])
+}
+
+model ChatRoom {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participants User[]    @relation("participants")
+  messages     Message[]
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  sender   User @relation("sender", fields: [senderId], references: [id])
+  senderId Int
+
+  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+  chatRoomId Int
 }

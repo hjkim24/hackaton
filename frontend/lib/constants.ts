@@ -48,6 +48,25 @@ export const TIME_SLOTS = [
   '23:30'
 ]
 
+export const DEFAULT_PREFERENCES = [
+  '취업',
+  '창업',
+  '연구',
+  '자격증',
+  '게임',
+  '음악',
+  '운동',
+  '독서',
+  '요리',
+  '패션',
+  '미식',
+  '여행',
+  '사진',
+  '노래',
+  '춤',
+  '밴드'
+] as const
+
 export const CALENDAR_CONFIG = {
   slotDuration: '00:30:00',
   slotMinTime: '09:00:00',

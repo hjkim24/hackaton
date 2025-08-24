@@ -32,20 +32,20 @@ model User {
   chatRooms     ChatRoom[]   @relation("participants")
 }
 
-enum days {
-  MONDAY
-  TUESDAY
-  WEDNESDAY
-  THURSDAY
-  FRIDAY
-  SATURDAY
-  SUNDAY
+enum Days {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+  SUN
 }
 
 model SpareTime {
   id        Int    @id @default(autoincrement())
   spareTime String
-  day       days
+  day       Days
   user      User?  @relation(fields: [userId], references: [id])
   userId    Int?
 }

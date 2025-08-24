@@ -8,6 +8,7 @@ import { GrHomeRounded } from 'react-icons/gr'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { HiOutlineUserCircle } from 'react-icons/hi2'
 import { HiUserCircle } from 'react-icons/hi2'
+import { Toaster } from 'sonner'
 import { cn } from '../libs/utils'
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
@@ -56,6 +57,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           )}
         </Link>
       </nav>
+
+      <Toaster position="top-center" richColors />
     </div>
   )
 }

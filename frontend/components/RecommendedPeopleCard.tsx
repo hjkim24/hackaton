@@ -9,6 +9,7 @@ interface UserProfile {
   photo?: string;
   nickname: string;
   age: number;
+  preferences: string[];
 }
 
 export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {
@@ -29,10 +30,22 @@ export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {
       <CardContent className="p-3">
         <div className="flex items-center space-x-2">
           {user.nickname && (
-            <>
-              <p className="font-bold text-lg">{user.nickname}</p>
-              <p className="text-gray-500">{user.age}</p>
-            </>
+            <div className="flex flex-col">
+              <div>
+                <p className="font-bold text-lg">{user.nickname}</p>
+                <p className="text-gray-500">{user.age}</p>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-2">
+            {user.preferences.map((pref, index) => (
+              <span 
+                key={index} 
+                className="bg-black/20 text-black text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm"
+              >
+                {pref}
+              </span>
+            ))}
+          </div>
+            </div>
           )}
         </div>
       </CardContent>

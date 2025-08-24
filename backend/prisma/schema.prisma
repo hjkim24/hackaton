@@ -14,19 +14,41 @@ enum Gender {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique
-  password String
-  gender Gender
-  college String
-  major String
+  id            Int    @id @default(autoincrement())
+  username      String @unique
+  password      String
+  nickname      String @unique
+  name          String
+  gender        Gender
+  college       String
+  major         String
   admissionYear Int
 
+  Preference Preference[]
+  SpareTime  SpareTime[]
+  likedBy    Like[]       @relation("liked_by")
+  likeTo     Like[]       @relation("like_to")
 }
 
 model Preference {
-  id Int @id @default(autoincrement())
-  createdBy User @relation("CreatedByUser", fields: [createdById], references: [id], onDelete: SetNull)
-  createdById Int @map("created_by_id")
+  id         Int    @id @default(autoincrement())
   preference String
+  user       User?  @relation(fields: [userId], references: [id])
+  userId     Int?
+}
+
+model SpareTime {
+  id        Int    @id @default(autoincrement())
+  spareTime String
+  user      User?  @relation(fields: [userId], references: [id])
+  userId    Int?
+}
+
+model Like {
+  id Int @id @default(autoincrement())
+
+  likedByUser   User? @relation("liked_by", fields: [likedByUserId], references: [id])
+  likedByUserId Int?
+  likedToUser   User? @relation("like_to", fields: [likedToUserId], references: [id])
+  likedToUserId Int?
 }

@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 
 interface ChatItem {
-  id: number; // 동적 라우팅을 위해 id는 계속 필요합니다.
+  id: number;
   avatar: string;
   name: string;
   lastMessage: string;

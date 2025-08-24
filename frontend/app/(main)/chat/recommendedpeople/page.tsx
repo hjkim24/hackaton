@@ -1,15 +1,15 @@
-// app/chat/recommendedpeople/page.tsx
+// app/(main)/chat/recommendedpeople/page.tsx
 
 "use client";
 
 import RecommendedPeopleCard from "@/components/RecommendedPeopleCard";
 
-// 예시 데이터
+// 가짜 데이터
 const recommendedUsers = [
-  { photo: "...", name: "이가영", age: 24 },
-  { photo: "...", name: "이나영", age: 23 },
-  { photo: "...", name: "이다영", age: 27 },
-  { photo: "...", name: "이라영", age: 25 },
+  { photo: "/src/alice.png", nickname: "이가영", age: 24 },
+  { photo: "/src/anni.png", nickname: "이나영", age: 23 },
+  { photo: "/src/charlie.png", nickname: "이다영", age: 27 },
+  { photo: "/src/john.png", nickname: "이라영", age: 25 },
 ];
 
 export default function RecommendedPeoplePage() {

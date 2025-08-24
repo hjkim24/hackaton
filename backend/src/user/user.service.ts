@@ -1,5 +1,5 @@
+import { PrismaService } from '@libs/prisma'
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'libs'
 import { LikeDto } from './dto/like.dto'
 import { PreferencesDto } from './dto/preference.dto'
 import { SpareTimesDto } from './dto/spare-time.dto'
@@ -127,6 +127,7 @@ export class UserService {
             gender: true,
             college: true,
             major: true,
+            age: true,
             admissionYear: true,
             Preference: true,
             SpareTime: true

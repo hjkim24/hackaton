@@ -4,7 +4,7 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ChatListItem from "@/components/ChatListItem";
-import { useWebSocketStore } from "@/stores/webSocketStore"; // 스토어 import
+import { useWebSocketStore } from "@/stores/webSocketStore";
 import { useEffect } from "react";
 
 export default function ChattingPage() {
@@ -34,7 +34,7 @@ export default function ChattingPage() {
               chat={{
                 id: room.id,
                 avatar: "...", // 참여자의 아바타 가져오는 로직 필요
-                name: room.participants.map(p => p.nickname).filter(name => name !== 'user1').join(', '), // 본인 제외 닉네임 표시
+                name: room.participants.map(p => p.nickname).filter(name => name !== 'user1').join(', '),
                 lastMessage: room.messages.length > 0 ? room.messages[0].content : "새 채팅방입니다.",
               }}
             />

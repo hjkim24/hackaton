@@ -77,7 +77,7 @@ export class RecommendService {
           not: userId
         },
         user: {
-          likedBy: {
+          likeTo: {
             none: { likedByUserId: userId }
           }
         }
@@ -132,7 +132,7 @@ export class RecommendService {
             preference: keyword
           }
         },
-        likedBy: {
+        likeTo: {
           none: {
             likedByUserId: userId
           }

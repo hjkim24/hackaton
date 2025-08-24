@@ -1,4 +1,4 @@
-import { PrismaClient, Days, Gender, User } from '@prisma/client'
+import { Days, Gender, PrismaClient, User } from '@prisma/client'
 import { hash } from 'argon2'
 
 const prisma = new PrismaClient()

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import SwipeContainer from '@/components/SwipeContainer'
 import MainPageHeader from './_components/MainPageHeader'
+import { useUserStore } from '@/stores/userStore'
 
 type Preference = {
   id: number
@@ -37,6 +38,7 @@ export default function SwipePage() {
   const [profiles, setProfiles] = useState<LikedToUser[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const { setLikedUsers } = useUserStore()
 
   useEffect(() => {
     const fetchLikeList = async () => {
@@ -60,6 +62,9 @@ export default function SwipePage() {
         console.log('Received data:', data)
         const userProfiles = data.map(item => item.likedToUser)
         setProfiles(userProfiles)
+        
+        // 전역 스토어에 좋아요한 사용자들 저장
+        setLikedUsers(userProfiles)
       } catch (err) {
         console.error('Fetch error details:', err)
         if (err instanceof TypeError && err.message === 'Failed to fetch') {
@@ -73,7 +78,7 @@ export default function SwipePage() {
     }
 
     fetchLikeList()
-  }, [])
+  }, [setLikedUsers])
 
   if (loading) {
     return (

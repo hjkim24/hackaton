@@ -4,11 +4,12 @@
 
 import RecommendedPeopleCard from "@/components/RecommendedPeopleCard";
 
+// 가짜 데이터
 const recommendedUsers = [
-  { photo: "/src/alice.png", nickname: "이가영", admissionYear: 24 },
-  { photo: "/src/anni.png", nickname: "이나영", admissionYear: 23 },
-  { photo: "/src/charlie.png", nickname: "이다영", admissionYear: 27 },
-  { photo: "/src/john.png", nickname: "이라영", admissionYear: 25 },
+  { photo: "/src/alice.png", nickname: "이가영", age: 24 },
+  { photo: "/src/anni.png", nickname: "이나영", age: 23 },
+  { photo: "/src/charlie.png", nickname: "이다영", age: 27 },
+  { photo: "/src/john.png", nickname: "이라영", age: 25 },
 ];
 
 export default function RecommendedPeoplePage() {

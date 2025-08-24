@@ -5,11 +5,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-// Prisma User 모델에 맞춘 타입 정의
 interface UserProfile {
   photo?: string;
   nickname: string;
-  age: number; // admissionYear 대신 age를 직접 사용
+  age: number;
 }
 
 export default function RecommendedPeopleCard({ user }: { user: UserProfile }) {

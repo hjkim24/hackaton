@@ -5,21 +5,29 @@ import { AnimatePresence } from "framer-motion";
 import SwipeCard from "@/components/SwipeCard";
 import LikedProfiles from "@/components/LikedProfiles";
 
+type Preference = {
+  id: number
+  preference: string
+  userId: number
+}
+
+type SpareTime = {
+  id: number
+  spareTime: string
+  day: string
+  userId: number
+}
+
 type UserProfile = {
   id: number
-  age: number
-  sex: "male" | "female"
+  nickname: string
+  gender: 'male' | 'female'
   college: string
   major: string
-  username: string
-  nickname: string
-  name: string
+  age: number
   admissionYear: number
-  image: string
-  preferences: string[]
-  spareTime: { id: number, spareTime: string, user: string, day: string }[]
-  likeBy: string[]
-  likeTo: string[]
+  Preference: Preference[]
+  SpareTime: SpareTime[]
 }
 
 interface SwipeContainerProps {

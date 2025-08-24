@@ -8,19 +8,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import RecommendedPeopleCard from "@/components/RecommendedPeopleCard";
 import ChatListItem from "@/components/ChatListItem";
 
-// 예시 데이터 (나중에 백엔드 API에서 가져올 부분)
+// 예시 데이터
 const recommendedUsers = [
-  { photo: "...", name: "김민준", age: 24 },
-  { photo: "...", name: "박서윤", age: 23 },
-  { photo: "...", name: "이하준", age: 27 },
-  { photo: "...", name: "정다은", age: 25 },
+  { photo: "...", name: "이가영", age: 24 },
+  { photo: "...", name: "이나영", age: 23 },
+  { photo: "...", name: "이다영", age: 27 },
+  { photo: "...", name: "이라영", age: 25 },
 ];
 
 const chatList = [
-  { avatar: "...", name: "성대중기마", lastMessage: "자기야 밥 먹자" },
-  { avatar: "...", name: "김동준", lastMessage: "안녕하세용!" },
-  { avatar: "...", name: "최수정", lastMessage: "네, 좋아요!" },
-  // ...더 많은 채팅 목록
+  { avatar: "...", name: "성대송중기막재", lastMessage: "자기야 밥 먹자" },
+  { avatar: "...", name: "차은 우유 도현", lastMessage: "안녕하세용!" },
 ];
 
 export default function ChatPage() {
@@ -44,15 +42,13 @@ export default function ChatPage() {
 
         {/* Chatting 화면 */}
         <TabsContent value="chatting" className="p-4 flex-1 overflow-auto">
-          <ScrollArea className="h-[calc(100vh-200px)] w-full"> {/* 적절한 높이로 설정 */}
+          <ScrollArea className="h-[calc(100vh-200px)] w-full">
             {chatList.map((chat, index) => (
               <ChatListItem key={index} chat={chat} />
             ))}
           </ScrollArea>
         </TabsContent>
       </Tabs>
-      
-      {/* 하단 탭 바는 레이아웃에 포함되어 있다고 가정 */}
     </div>
   );
 }

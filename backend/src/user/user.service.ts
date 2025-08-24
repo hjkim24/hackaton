@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'libs'
+import { LikeDto } from './dto/like.dto'
 import { PreferencesDto } from './dto/preference.dto'
 import { SpareTimesDto } from './dto/spare-time.dto'
 
@@ -7,6 +8,7 @@ import { SpareTimesDto } from './dto/spare-time.dto'
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  // SpareTime 관련 API
   async createSpareTime(userId: number, dto: SpareTimesDto) {
     const createPromises = dto.spareTimes.map((timeDto) =>
       this.prisma.spareTime.create({
@@ -50,6 +52,7 @@ export class UserService {
     })
   }
 
+  // Preference 관련 API
   async createPreference(userId: number, dto: PreferencesDto) {
     const createPromises = dto.preferences.map((prefDto) =>
       this.prisma.preference.create({
@@ -88,6 +91,26 @@ export class UserService {
     // 사용자의 모든 선호도 반환
     return this.prisma.preference.findMany({
       where: { userId }
+    })
+  }
+
+  async pushLike(dto: LikeDto) {
+    const isExist = await this.prisma.like.findFirst({
+      where: {
+        likedByUserId: dto.likedById,
+        likedToUserId: dto.likedToId
+      }
+    })
+
+    if (isExist) {
+      return isExist
+    }
+
+    return this.prisma.like.create({
+      data: {
+        likedByUserId: dto.likedById,
+        likedToUserId: dto.likedToId
+      }
     })
   }
 }

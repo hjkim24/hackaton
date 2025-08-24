@@ -3,6 +3,7 @@ import { IDValidationPipe } from 'libs/pipe/src/id-validation.pipe'
 import { PreferencesDto } from './dto/preference.dto'
 import { SpareTimesDto } from './dto/spare-time.dto'
 import { UserService } from './user.service'
+import { LikeDto } from './dto/like.dto'
 
 @Controller('user')
 export class UserController {
@@ -38,5 +39,12 @@ export class UserController {
     @Body() preferenceDto: PreferencesDto
   ) {
     return await this.userService.updatePreference(userId, preferenceDto)
+  }
+
+  @Post()
+  async pushLike(
+    @Body() likeDto: LikeDto
+  ) {
+    return await this.userService.pushLike(likeDto)
   }
 }

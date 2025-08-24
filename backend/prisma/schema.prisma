@@ -62,4 +62,6 @@ model Like {
   likedByUserId Int?
   likedToUser   User? @relation("like_to", fields: [likedToUserId], references: [id])
   likedToUserId Int?
+
+  @@unique([likedByUserId, likedToUserId])
 }

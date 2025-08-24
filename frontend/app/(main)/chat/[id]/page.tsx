@@ -1,62 +1,101 @@
 // app/chat/[id]/page.tsx
 
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
-import { ChevronLeftIcon, Paperclip, Mic, Send } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { ChevronLeft, Paperclip, Mic, SendHorizonal } from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useWebSocketStore } from "@/stores/webSocketStore"; // 스토어 import
 
-// 백엔드 API에서 가져올 가짜 메시지 데이터
-const mockMessages = [
-  { id: 1, sender: 'other', text: '자기야 밥 먹자' },
-  { id: 2, sender: 'me', text: '안녕하세요! 좋아요' },
-  { id: 3, sender: 'other', text: '언제 시간이 되시나요?' },
-];
+export default function ChatRoomPage() {
+  const { id } = useParams();
+  const chatRoomId = Number(id);
 
-export default function ChatRoomPage({ params }: { params: { id: string } }) {
-  const chatUserId = params.id; // URL에서 ID를 가져옵니다.
-  const chatUserName = "성대송중기막재"; // 이 부분은 나중에 API로 가져와야 합니다.
-  const chatUserAvatar = "..."; // 이 부분도 나중에 API로 가져와야 합니다.
+  const { socket, messages, currentRoomId, setCurrentRoom, sendMessage } = useWebSocketStore();
+  
+  const [newMessage, setNewMessage] = useState("");
+
+  useEffect(() => {
+    if (chatRoomId) {
+      setCurrentRoom(chatRoomId);
+    }
+  }, [chatRoomId, setCurrentRoom]);
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() === "") return;
+    if (chatRoomId) {
+      sendMessage(chatRoomId, newMessage);
+      setNewMessage("");
+    }
+  };
+  
+  // 이 부분은 임시 데이터입니다. 실제로는 채팅방 정보도 API로 가져와야 합니다.
+  const opponent = {
+    name: "상대방 닉네임", 
+    avatarUrl: "/src/bob.png",
+  };
 
   return (
-    <div className="flex flex-col h-screen">
-      {/* 상단 채팅방 헤더 */}
-      <div className="flex items-center space-x-4 p-4 border-b-2">
-        <Link href="/chat">
-          <ChevronLeftIcon className="h-6 w-6" />
+    <div className="flex flex-col h-screen bg-background">
+      {/* 상단 헤더 */}
+      <header className="flex items-center p-4 border-b sticky top-0 bg-background z-10">
+        <Link href="/chat/chatting" className="mr-4">
+          <ChevronLeft className="h-6 w-6" />
         </Link>
-        <Avatar className="w-10 h-10">
-          <AvatarImage src={chatUserAvatar} alt={chatUserName} />
-          <AvatarFallback>{chatUserName[0]}</AvatarFallback>
+        <Avatar>
+          <AvatarImage src={opponent.avatarUrl} />
+          <AvatarFallback>{opponent.name.substring(0, 2)}</AvatarFallback>
         </Avatar>
-        <p className="font-bold">{chatUserName}</p>
-      </div>
+        <h2 className="font-bold ml-3 text-lg">{opponent.name}</h2>
+      </header>
 
-      {/* 메시지 목록 */}
+      {/* 메시지 목록 (스크롤 가능) */}
       <ScrollArea className="flex-1 p-4 overflow-y-auto">
-        <div className="space-y-4">
-          {mockMessages.map(msg => (
-            <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`p-3 rounded-lg max-w-[80%] ${
-                msg.sender === 'me' ? 'bg-primary text-primary-foreground' : 'bg-gray-200'
-              }`}>
-                {msg.text}
+        <div className="flex flex-col gap-4">
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`flex items-end gap-2 ${
+                msg.senderId === 1 ? "justify-end" : "justify-start" // TODO: 현재 로그인된 유저 ID로 변경
+              }`}
+            >
+              <div
+                className={`max-w-[70%] rounded-2xl px-4 py-2 ${
+                  msg.senderId === 1 // TODO: 현재 로그인된 유저 ID로 변경
+                    ? "bg-primary text-primary-foreground rounded-br-none"
+                    : "bg-muted rounded-bl-none"
+                }`}
+              >
+                <p>{msg.content}</p>
               </div>
             </div>
           ))}
         </div>
       </ScrollArea>
 
-      {/* 메시지 입력창 */}
-      <div className="p-4 flex items-center space-x-2 border-t-2">
-        <Paperclip className="h-6 w-6 text-gray-500" />
-        <input 
+      {/* 하단 메시지 입력창 */}
+      <footer className="flex items-center p-4 border-t gap-2 sticky bottom-0 bg-background">
+        <button className="p-2 hover:bg-muted rounded-full">
+          <Paperclip className="h-6 w-6 text-gray-500" />
+        </button>
+        <input
           type="text"
-          placeholder="메시지 입력..."
-          className="flex-1 p-3 rounded-full bg-gray-100 focus:outline-none focus:bg-gray-200"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+          placeholder="메시지를 입력하세요..."
+          className="flex-1 bg-muted border-none rounded-full px-4 py-3 focus:outline-none"
         />
-        <Mic className="h-6 w-6 text-gray-500" />
-        <Send className="h-6 w-6 text-primary" />
-      </div>
+        <button 
+          onClick={handleSendMessage}
+          className="p-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/90"
+        >
+          <SendHorizonal className="h-5 w-5" />
+        </button>
+      </footer>
     </div>
   );
 }

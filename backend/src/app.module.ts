@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { PrismaModule } from '../libs/prisma/src'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ChatGateway } from './chat/chat.gateway'
@@ -18,7 +19,8 @@ import { UserService } from './user/user.service'
     }),
     UserModule,
     ChatModule,
-    RecommendModule
+    RecommendModule,
+    PrismaModule
   ],
   controllers: [AppController],
   providers: [AppService, ChatGateway, ChatService, UserService]

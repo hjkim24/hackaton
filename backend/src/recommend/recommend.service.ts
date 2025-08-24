@@ -1,6 +1,6 @@
-import { PrismaService } from '@libs/prisma'
 import { Injectable } from '@nestjs/common'
-import { Days } from '../../generated/prisma'
+import { Days } from '@prisma/client'
+import { PrismaService } from '../../libs/prisma/src'
 import { FilterSpareTimeDto } from './dto/filter-spare-time.dto'
 
 @Injectable()

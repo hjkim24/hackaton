@@ -86,7 +86,8 @@ export class RecommendService {
               }
             },
             id: true,
-            nickname: true
+            nickname: true,
+            age: true
           }
         }
       }

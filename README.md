@@ -176,7 +176,7 @@ pnpm run start:dev
 - **김학재** - Backend Developer
 - **유도현** - Backend Developer
 - **전수민** - Frontend Developer
-- **최중현** - Frontend Developer
+- **최중현** - Designer, Frontend Developer
 
 ---
 
